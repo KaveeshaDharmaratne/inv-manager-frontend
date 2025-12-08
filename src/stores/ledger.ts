@@ -1,8 +1,8 @@
-import type { LedgerEntry } from "@/types/ledger";
+import type { LedgerEntry, LedgerFilter } from "@/types/ledger";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
-const useLedgerStore = defineStore('ledger', () => {
+export const useLedgerStore = defineStore('ledger', () => {
   const entries = ref<LedgerEntry[]>([]);
   const isLoading = ref(false);
 
@@ -14,7 +14,7 @@ const useLedgerStore = defineStore('ledger', () => {
   ];
 
   // --- Actions ---
-  async function fetchEntries(filter: LedgerEntry) {
+  async function fetchEntries(filter: LedgerFilter) {
 
     isLoading.value = true;
 
