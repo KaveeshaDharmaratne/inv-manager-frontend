@@ -4,6 +4,6 @@ export interface NavItem {
   expanded: boolean;
   children: {
     label: string;
-    to: string; // Changed from href to to for Vue Router
+    to: string; // Changed from href to 'to' for Vue Router
   }[];
 }
