@@ -1,108 +1,53 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
-import type { LedgerFilter } from '@/types/ledger';
+import { reactive } from 'vue'
+import type { LedgerFilter } from '@/types/ledger'
 
 // Define what events this component can emit to its parent
 const emit = defineEmits<{
-  (e: 'submit', filters: LedgerFilter): void;
-}>();
+  (e: 'submit', filters: LedgerFilter): void
+}>()
 
 const filters = reactive<LedgerFilter>({
   fromDate: '',
   toDate: '',
   productCode: '',
-  description: ''
-});
+  description: '',
+})
 
 function onSubmit() {
-  emit('submit', filters);
+  emit('submit', filters)
 }
 </script>
 
 <template>
-  <div class="filter-card">
-    <div class="form-grid">
-      <div class="form-group">
-        <label>From Date</label>
-        <input type="date" v-model="filters.fromDate"/>
+  <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="flex flex-col gap-2">
+        <label class="text-sm font-semibold text-gray-700">From Date</label>
+        <input type="date" v-model="filters.fromDate"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" />
       </div>
-      <div class="form-group">
-        <label>To Date</label>
-        <input type="date" v-model="filters.toDate"/>
+      <div class="flex flex-col gap-2">
+        <label class="text-sm font-semibold text-gray-700">To Date</label>
+        <input type="date" v-model="filters.toDate"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" />
       </div>
-      <div class="form-group">
-        <label>Product Code</label>
-        <input type="text" v-model="filters.productCode" placeholder="Code"/>
+      <div class="flex flex-col gap-2">
+        <label class="text-sm font-semibold text-gray-700">Product Code</label>
+        <input type="text" v-model="filters.productCode" placeholder="Code"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" />
       </div>
-      <div class="form-group">
-        <label>Product Description</label>
-        <input type="text" v-model="filters.description" placeholder="Description"/>
+      <div class="flex flex-col gap-2">
+        <label class="text-sm font-semibold text-gray-700">Product Description</label>
+        <input type="text" v-model="filters.description" placeholder="Description"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" />
       </div>
     </div>
-    <div class="actions">
-      <button @click="onSubmit" class="btn-submit">Submit</button>
+    <div class="flex justify-end mt-6">
+      <button @click="onSubmit"
+        class="bg-indigo-600 text-white px-8 py-2.5 rounded-md font-medium text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors shadow-sm">
+        Submit
+      </button>
     </div>
   </div>
 </template>
-
-<style scoped>
-.filter-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  margin-bottom: 2rem;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #555;
-}
-
-.input {
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.input:focus {
-  border-color: #6366f1;
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1.5rem;
-}
-
-.btn-submit {
-  background-color: #5453e8;
-  color: white;
-  border: none;
-  padding: 0.75rem 2rem;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.btn-submit:hover {
-  background-color: #4341c9;
-}
-</style>
