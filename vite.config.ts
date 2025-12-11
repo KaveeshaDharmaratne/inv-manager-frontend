@@ -1,3 +1,4 @@
+/// <reference types="vitest/globals" />
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
