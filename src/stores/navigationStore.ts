@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import type { NavItem } from '@/types/navItem';
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import type { NavItem } from '@/types/navItem'
 
 export const useNavigationStore = defineStore('navigation', () => {
   const navItems = ref<NavItem[]>([
@@ -9,7 +9,7 @@ export const useNavigationStore = defineStore('navigation', () => {
       icon: 'inventory',
       expanded: true,
       children: [
-        { label: 'Stock Overview', to: '/stock/overview'},
+        { label: 'Stock Overview', to: '/stock/overview' },
         { label: 'Damage', to: '/stock/damage' },
       ],
     },
@@ -32,11 +32,11 @@ export const useNavigationStore = defineStore('navigation', () => {
         { label: 'Daily Stock', to: '/reports/daily' },
       ],
     },
-  ]);
+  ])
 
   const toggleExpand = (item: NavItem) => {
-    item.expanded = !item.expanded;
-  };
+    item.expanded = !item.expanded
+  }
 
-  return { navItems, toggleExpand };
-});
+  return { navItems, toggleExpand }
+})

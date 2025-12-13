@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 
@@ -7,15 +7,14 @@
   --color-background-light: #f4f4f5;
   --color-background-dark: #18181b;
 
-  --font-sans: "Inter", sans-serif;
-  --font-display: "Inter", sans-serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Inter', sans-serif;
 
   --radius: 0.5rem; /* Maps to rounded-* utilities */
 }
 @variant dark (&:where(.dark, .dark *));
 
 @layer base {
-
   html {
     font-family: theme('fontFamily.sans');
   }
