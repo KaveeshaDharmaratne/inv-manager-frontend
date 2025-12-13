@@ -16,6 +16,7 @@
     "lint:eslint": "eslint . --fix --cache",
     "lint": "run-s lint:*",
     "format": "prettier --write src/",
+    "format:check": "prettier --check src/",
     "test": "vitest",
     "test:unit": "vitest run"
   },
