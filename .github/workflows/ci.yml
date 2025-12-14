@@ -2,7 +2,7 @@ name: PR Quality and Security Check
 
 on:
   pull_request:
-    branches: ["main"]
+    branches: ['main']
 
 jobs:
   validate-and-build:
@@ -57,4 +57,3 @@ jobs:
         uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: high
-    
