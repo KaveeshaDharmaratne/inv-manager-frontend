@@ -6,8 +6,8 @@ describe('Router Configuration', () => {
     expect(router).toBeDefined()
   })
 
-  it('has no routes defined initially', () => {
+  it('has 7 routes defined initially', () => {
     const routes = router.getRoutes()
-    expect(routes).toHaveLength(0)
+    expect(routes).toHaveLength(7)
   })
 })

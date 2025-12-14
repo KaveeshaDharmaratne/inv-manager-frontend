@@ -12,11 +12,6 @@ const router = createRouter({
       component: Placeholder,
     },
     {
-      path: '/stock/overview',
-      name: 'stock-overview',
-      component: Placeholder,
-    },
-    {
       path: '/stock/damage',
       name: 'stock-damage',
       component: Placeholder,
