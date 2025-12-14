@@ -16,8 +16,8 @@ describe('Navbar.vue', () => {
     const wrapper = mount(Navbar)
 
     // Find the button for "Stock" (which is active in the mock data)
-    const stockBtn = wrapper.findAll('button').find(b => b.text().includes('Stock'))
-    
+    const stockBtn = wrapper.findAll('button').find((b) => b.text().includes('Stock'))
+
     expect(stockBtn).toBeDefined()
     // Verify active classes
     expect(stockBtn?.classes()).toContain('bg-primary')
@@ -28,8 +28,8 @@ describe('Navbar.vue', () => {
     const wrapper = mount(Navbar)
 
     // Find the button for "Transactions" (which is inactive)
-    const transactionsBtn = wrapper.findAll('button').find(b => b.text().includes('Transactions'))
-    
+    const transactionsBtn = wrapper.findAll('button').find((b) => b.text().includes('Transactions'))
+
     expect(transactionsBtn).toBeDefined()
     // Verify inactive classes
     expect(transactionsBtn?.classes()).toContain('text-zinc-600')
@@ -42,9 +42,9 @@ describe('Navbar.vue', () => {
     // "Stock" is expanded by default in the mock data
     expect(wrapper.text()).toContain('Stock Overview')
     expect(wrapper.text()).toContain('Damage')
-    
+
     // Verify "Stock Overview" is active
-    const stockOverviewLink = wrapper.findAll('a').find(a => a.text().includes('Stock Overview'))
+    const stockOverviewLink = wrapper.findAll('a').find((a) => a.text().includes('Stock Overview'))
     expect(stockOverviewLink?.classes()).toContain('text-primary')
     expect(stockOverviewLink?.classes()).toContain('bg-zinc-200')
   })
@@ -52,7 +52,7 @@ describe('Navbar.vue', () => {
   it('toggles sub-menu expansion when clicked', async () => {
     const wrapper = mount(Navbar)
 
-    const transactionsBtn = wrapper.findAll('button').find(b => b.text().includes('Transactions'))
+    const transactionsBtn = wrapper.findAll('button').find((b) => b.text().includes('Transactions'))
     expect(transactionsBtn).toBeDefined()
 
     // Find the sub-menu container for Transactions
@@ -70,11 +70,9 @@ describe('Navbar.vue', () => {
     // Now should be visible (style attribute should be empty or not contain display: none)
     // Note: Vue removes display: none when v-show is true
     expect(transactionsSubMenu.attributes('style') || '').not.toContain('display: none')
-    
+
     // Click to collapse
     await transactionsBtn?.trigger('click')
     expect(transactionsSubMenu.attributes('style')).toContain('display: none')
   })
 })
-
-

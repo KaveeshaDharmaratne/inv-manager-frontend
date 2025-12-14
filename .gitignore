@@ -23,7 +23,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
-.github
+.github/copilot-instructions.md
 *.tsbuildinfo
 
 .eslintcache
