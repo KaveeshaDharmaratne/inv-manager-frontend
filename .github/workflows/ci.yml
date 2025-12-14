@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       #1 Ceckout code
-      -name: Checkout Repository
-      uses: actions/checkout@v5
+      - name: Checkout Repository
+        uses: actions/checkout@v5
 
       #2 Setup nodeJs
       - name: Setup Node.js
