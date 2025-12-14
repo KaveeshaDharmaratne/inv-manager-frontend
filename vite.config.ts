@@ -5,7 +5,6 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from '@tailwindcss/vite'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
@@ -18,8 +17,8 @@ export default defineConfig({
     },
   },
   test: {
-    environment: 'jsdom',
     globals: true,
+    environment: 'jsdom',
     exclude: ['**/node_modules/**', '**/dist/**', '**/e2e/**'],
     root: fileURLToPath(new URL('./', import.meta.url)),
   },
