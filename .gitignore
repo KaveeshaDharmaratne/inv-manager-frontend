@@ -23,10 +23,9 @@ coverage
 *.njsproj
 *.sln
 *.sw?
-
 *.tsbuildinfo
-
 .eslintcache
+.github/copilot-instructions.md
 
 # Cypress
 /cypress/videos/
