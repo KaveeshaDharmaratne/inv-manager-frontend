@@ -24,7 +24,7 @@ const router = createRouter({
     {
       path: '/transactions/return',
       name: 'transactions-return',
-      component: Placeholder,
+      component: () => import('../views/ReturnView.vue'),
     },
     {
       path: '/reports/stock',
