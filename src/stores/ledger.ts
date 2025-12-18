@@ -38,7 +38,7 @@ export const useLedgerStore = defineStore('ledger', () => {
   ]
 
   // --- Actions ---
-  async function fetchEntries(filter: LedgerFilter) {
+  async function fetchEntries(_filter: LedgerFilter) {
     isLoading.value = true
 
     // Simulate API delay
