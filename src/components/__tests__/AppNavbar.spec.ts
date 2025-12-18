@@ -12,12 +12,6 @@ const testRouter = createRouter({
 })
 
 describe('AppNavbar.vue', () => {
-  beforeEach(async () => {
-    setActivePinia(createPinia())
-    await router.push('/')
-    await router.isReady()
-  })
-
   // 1. Render the navigation items
   it('renders the correct navigation items', () => {
     const wrapper = mount(AppNavbar, {
