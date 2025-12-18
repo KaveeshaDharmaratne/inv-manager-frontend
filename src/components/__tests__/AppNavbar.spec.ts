@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import router from '../../router/index'
 import { createRouter, createMemoryHistory } from 'vue-router'
-import { createPinia, setActivePinia } from 'pinia'
+import { createPinia } from 'pinia'
 import AppNavbar from '../AppNavbar.vue'
 
 // Setup router
