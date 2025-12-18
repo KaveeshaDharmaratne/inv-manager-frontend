@@ -24,7 +24,7 @@ const router = createRouter({
     {
       path: '/transactions/return',
       name: 'transactions-return',
-      component: Placeholder,
+      component: () => import('../views/ReturnView.vue'),
     },
     {
       path: '/reports/stock',
@@ -34,7 +34,7 @@ const router = createRouter({
     {
       path: '/reports/bin',
       name: 'reports-bin',
-      component: Placeholder,
+      component: () => import('../views/BinCardLedgerView.vue'),
     },
     {
       path: '/reports/daily',
