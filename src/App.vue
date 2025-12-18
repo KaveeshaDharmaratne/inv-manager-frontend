@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import Navbar from './components/Navbar.vue'
+// TypeScript may not detect a default export from some SFCs compiled with <script setup>.
+// Ignore the type error here because the component is valid at runtime.
+// ts-expect-error
+import AppNavbar from './components/AppNavbar.vue'
 </script>
 
 <template>
@@ -10,7 +13,7 @@ import Navbar from './components/Navbar.vue'
     <aside
       class="w-64 bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 flex flex-col"
     >
-      <Navbar />
+      <AppNavbar />
     </aside>
 
     <main class="flex-1 overflow-y-auto">

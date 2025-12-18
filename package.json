@@ -15,8 +15,10 @@
     "lint:oxlint": "oxlint . --fix -D correctness --ignore-path .gitignore",
     "lint:eslint": "eslint . --fix --cache",
     "lint": "run-s lint:*",
-    "format": "prettier --write src/",
-    "test": "vitest"
+    "format": "prettier --write \"src/**/*.{ts,js,vue,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js,vue,json,css,md}\"",
+    "test": "vitest",
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
