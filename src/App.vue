@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-// TypeScript may not detect a default export from some SFCs compiled with <script setup>.
-// Ignore the type error here because the component is valid at runtime.
-// ts-expect-error
 import AppNavbar from './components/AppNavbar.vue'
 </script>
 
