@@ -20,7 +20,7 @@ const navItems = ref<NavItem[]>([
     icon: 'receipt_long',
     expanded: false,
     children: [
-      { label: 'Sale', to: '/sale' },
+      { label: 'Sale', to: '/transactions/sale' },
       { label: 'Return', to: '/transactions/return' },
     ],
   },
