@@ -7,8 +7,8 @@ export const useProductStore = defineStore('product', () => {
   const products = ref<Product[]>([
     { code: 'A001', description: 'Wireless Mouse' },
     { code: 'A002', description: 'Mechanical Keyboard' },
-    { code: 'B105', description: 'HDMI Cable 2m' },
-    { code: 'C999', description: 'USB-C Hub' },
+    { code: 'B001', description: 'HDMI Cable 2m' },
+    { code: 'B002', description: 'USB-C Hub' },
   ])
 
   const getProductByCode = (code: string): Product | undefined => {

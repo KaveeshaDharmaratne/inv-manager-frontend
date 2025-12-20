@@ -19,7 +19,7 @@ const router = createRouter({
     {
       path: '/transactions/sale',
       name: 'transactions-sale',
-      component: Placeholder,
+      component: () => import('../views/SaleView.vue'),
     },
     {
       path: '/transactions/return',

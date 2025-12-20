@@ -7,7 +7,7 @@ const productStore = useProductStore()
 
 // --- State ---
 const invoiceDetails = reactive<Omit<InvoiceDetails, 'items'>>({
-  date: new Date().toISOString().split('T')[0], // Default to current day
+  date: new Date().toISOString().split('T')[0] ?? '', // Default to current day
   dealer: '',
   invoiceNumber: '',
 })
