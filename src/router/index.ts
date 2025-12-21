@@ -9,7 +9,7 @@ const router = createRouter({
     {
       path: '/stock/overview',
       name: 'stock-overview',
-      component: Placeholder,
+      component: () => import('../views/StockOverviewView.vue'),
     },
     {
       path: '/stock/damage',
