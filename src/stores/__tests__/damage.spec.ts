@@ -21,35 +21,21 @@ describe('Damage Store', () => {
 
   it('fetches items and updates state', async () => {
     const store = useDamageStore()
-
-    // Start the fetch
     const promise = store.fetchItems()
-
-    // Assert loading state
     expect(store.isLoading).toBe(true)
-
-    // Fast-forward time
     vi.advanceTimersByTime(500)
     await promise
-
-    // Assert data loaded
     expect(store.isLoading).toBe(false)
     expect(store.items.length).toBeGreaterThan(0)
   })
 
   it('filters items by search query (Case Insensitive)', () => {
     const store = useDamageStore()
-
-    // Arrange: Manually set data
     store.items = [
       { id: '1', date: '2023-10-27', type: 'Damage', dealer: 'Alpha', returnNoteNo: 'RN-001', code: 'A1', description: 'Desc 1', qty: 1 },
       { id: '2', date: '2023-10-26', type: 'Damage', dealer: 'Beta', returnNoteNo: 'RN-002', code: 'B2', description: 'Desc 2', qty: 1 },
     ]
-
-    // Act: Search for "alpha" (lowercase)
     store.searchQuery = 'alpha'
-
-    // Assert: Should find the "Alpha" dealer
     expect(store.filteredItems).toHaveLength(1)
     expect(store.filteredItems[0]?.dealer).toBe('Alpha')
   })
