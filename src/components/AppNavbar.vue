@@ -11,8 +11,8 @@ const navItems = ref<NavItem[]>([
     icon: 'inventory',
     expanded: true,
     children: [
-      { label: 'Stock Overview', to: '/stock' },
-      { label: 'Damage', to: '/damage' },
+      { label: 'Stock Overview', to: '/stock/overview' },
+      { label: 'Damage', to: '/stock/damage' },
     ],
   },
   {
