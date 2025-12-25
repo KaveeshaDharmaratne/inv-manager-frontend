@@ -32,8 +32,26 @@ describe('Damage Store', () => {
   it('filters items by search query (Case Insensitive)', () => {
     const store = useDamageStore()
     store.items = [
-      { id: '1', date: '2023-10-27', type: 'Damage', dealer: 'Alpha', returnNoteNo: 'RN-001', code: 'A1', description: 'Desc 1', qty: 1 },
-      { id: '2', date: '2023-10-26', type: 'Damage', dealer: 'Beta', returnNoteNo: 'RN-002', code: 'B2', description: 'Desc 2', qty: 1 },
+      {
+        id: '1',
+        date: '2023-10-27',
+        type: 'Damage',
+        dealer: 'Alpha',
+        returnNoteNo: 'RN-001',
+        code: 'A1',
+        description: 'Desc 1',
+        qty: 1,
+      },
+      {
+        id: '2',
+        date: '2023-10-26',
+        type: 'Damage',
+        dealer: 'Beta',
+        returnNoteNo: 'RN-002',
+        code: 'B2',
+        description: 'Desc 2',
+        qty: 1,
+      },
     ]
     store.searchQuery = 'alpha'
     expect(store.filteredItems).toHaveLength(1)
@@ -43,8 +61,26 @@ describe('Damage Store', () => {
   it('filters items by code', () => {
     const store = useDamageStore()
     store.items = [
-      { id: '1', date: '', type: 'Damage', dealer: '', returnNoteNo: '', code: 'HDD-500', description: '', qty: 1 },
-      { id: '2', date: '', type: 'Damage', dealer: '', returnNoteNo: '', code: 'SSD-250', description: '', qty: 1 },
+      {
+        id: '1',
+        date: '',
+        type: 'Damage',
+        dealer: '',
+        returnNoteNo: '',
+        code: 'HDD-500',
+        description: '',
+        qty: 1,
+      },
+      {
+        id: '2',
+        date: '',
+        type: 'Damage',
+        dealer: '',
+        returnNoteNo: '',
+        code: 'SSD-250',
+        description: '',
+        qty: 1,
+      },
     ]
 
     store.searchQuery = 'SSD'

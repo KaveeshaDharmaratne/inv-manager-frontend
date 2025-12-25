@@ -29,7 +29,16 @@ describe('DamagedReturnsView.vue', () => {
     const store = useDamageStore()
 
     store.items = [
-      { id: '1', date: '2023-10-27', type: 'Damage', dealer: 'Test Dealer', returnNoteNo: 'RN-999', code: 'CODE-1', description: 'Broken', qty: 5 }
+      {
+        id: '1',
+        date: '2023-10-27',
+        type: 'Damage',
+        dealer: 'Test Dealer',
+        returnNoteNo: 'RN-999',
+        code: 'CODE-1',
+        description: 'Broken',
+        qty: 5,
+      },
     ]
 
     await wrapper.vm.$nextTick()
