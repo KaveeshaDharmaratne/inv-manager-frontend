@@ -17,15 +17,15 @@ describe('Return Store', () => {
     const store = useReturnStore()
     store.addItem()
     expect(store.form.items.length).toBe(2)
-    expect(store.form.items[1].qty).toBeNull()
+    expect(store.form.items[1]?.qty).toBeNull()
   })
 
   it('removes an item by id', () => {
     const store = useReturnStore()
-    const firstItemId = store.form.items[0].id
+    const firstItemId = store.form.items[0]?.id
     store.addItem()
-    store.removeItem(firstItemId)
+    if (firstItemId) store.removeItem(firstItemId)
     expect(store.form.items.length).toBe(1)
-    expect(store.form.items[0].id).not.toBe(firstItemId)
+    expect(store.form.items[0]?.id).not.toBe(firstItemId)
   })
 })

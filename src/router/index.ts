@@ -14,7 +14,7 @@ const router = createRouter({
     {
       path: '/stock/damage',
       name: 'stock-damage',
-      component: Placeholder,
+      component: () => import('../views/DamagedReturnsView.vue'),
     },
     {
       path: '/transactions/sale',
