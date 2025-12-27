@@ -17,7 +17,7 @@ export const useReturnStore = defineStore('returns', () => {
 
   function addItem() {
     const newItem: ReturnItem = {
-      id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+      id: Date.now().toString() + Math.random().toString(36).substring(2),
       code: '',
       description: '',
       qty: null,
