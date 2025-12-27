@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import StockInfoCards from '@/components/StockInfoCards.vue'
+import StockOverviewTable from '@/components/StockOverviewTable.vue'
+import { useStockStore } from '@/stores/stockStore'
+
+const stockStore = useStockStore()
 </script>
 
 <template>
@@ -16,6 +20,10 @@ import StockInfoCards from '@/components/StockInfoCards.vue'
         </div>
       </div>
       <StockInfoCards />
+
+      <div class="mt-8">
+        <StockOverviewTable :transactions="stockStore.transactions" />
+      </div>
     </div>
   </main>
 </template>

@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue'
 import type { ReturnFormState, ReturnItem } from '@/types/returns'
+import { useStockStore } from './stockStore'
 
 export const useReturnStore = defineStore('returns', () => {
+  const stockStore = useStockStore()
   const form = reactive<ReturnFormState>({
     date: new Date().toISOString().split('T')[0] ?? '',
     type: 'Good',
@@ -35,6 +37,19 @@ export const useReturnStore = defineStore('returns', () => {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000))
     console.log('Submitting:', form)
+
+    let transactionType = 'Return Stock'
+    if (form.type === 'Damage') transactionType = 'Damage Stock'
+    else if (form.type === 'Expired') transactionType = 'Expired Stock'
+
+    stockStore.addTransaction({
+      id: crypto.randomUUID(),
+      date: form.date,
+      type: transactionType,
+      transactionId: form.returnNoteNo,
+      dealer: form.dealer,
+    })
+
     isSubmitting.value = false
   }
 
