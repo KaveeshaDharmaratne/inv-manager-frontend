@@ -9,7 +9,7 @@ const router = createRouter({
     {
       path: '/stock/overview',
       name: 'stock-overview',
-      component: Placeholder,
+      component: () => import('../views/StockOverviewView.vue'),
     },
     {
       path: '/stock/damage',
@@ -19,7 +19,7 @@ const router = createRouter({
     {
       path: '/transactions/sale',
       name: 'transactions-sale',
-      component: Placeholder,
+      component: () => import('../views/SaleView.vue'),
     },
     {
       path: '/transactions/return',
