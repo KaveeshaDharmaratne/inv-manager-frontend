@@ -21,7 +21,7 @@
     "test:unit": "vitest run"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.2",
     "date-fns": "^4.1.0",
     "pinia": "^3.0.3",
