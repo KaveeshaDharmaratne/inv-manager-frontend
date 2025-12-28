@@ -45,21 +45,18 @@ describe('StockOverviewTable', () => {
     })
 
     const rows = wrapper.findAll('tbody tr')
-    // We expect 3 data rows. The "No transactions found" row should not be present.
+
     expect(rows.length).toBe(3)
 
-    // First row should be the latest date (2023-01-05)
-    expect(rows[0].text()).toContain('05/01/2023')
-    expect(rows[0].text()).toContain('Return Stock')
-    expect(rows[0].text()).toContain('RET-001')
+    expect(rows[0]!.text()).toContain('05/01/2023')
+    expect(rows[0]!.text()).toContain('Return Stock')
+    expect(rows[0]!.text()).toContain('RET-001')
 
-    // Second row (2023-01-03)
-    expect(rows[1].text()).toContain('03/01/2023')
-    expect(rows[1].text()).toContain('Damage Stock')
+    expect(rows[1]!.text()).toContain('03/01/2023')
+    expect(rows[1]!.text()).toContain('Damage Stock')
 
-    // Third row (2023-01-01)
-    expect(rows[2].text()).toContain('01/01/2023')
-    expect(rows[2].text()).toContain('Invoice')
+    expect(rows[2]!.text()).toContain('01/01/2023')
+    expect(rows[2]!.text()).toContain('Invoice')
   })
 
   it('displays "No transactions found" when list is empty', () => {
