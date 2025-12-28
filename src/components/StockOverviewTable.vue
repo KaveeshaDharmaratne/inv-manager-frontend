@@ -16,7 +16,7 @@ const sortedTransactions = computed(() => {
 const formatDate = (dateString: string) => {
   try {
     return format(parseISO(dateString), 'dd/MM/yyyy')
-  } catch (e) {
+  } catch {
     return dateString
   }
 }
