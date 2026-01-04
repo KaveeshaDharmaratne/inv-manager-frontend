@@ -50,7 +50,7 @@
     "jiti": "^2.6.1",
     "jsdom": "^27.3.0",
     "npm-run-all2": "^8.0.4",
-    "oxlint": "~1.23.0",
+    "oxlint": "~1.36.0",
     "postcss": "^8.5.6",
     "prettier": "3.6.2",
     "tailwindcss": "^4.1.17",
