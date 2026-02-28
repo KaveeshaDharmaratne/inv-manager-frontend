@@ -1,7 +1,15 @@
 import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue'
+import axios from 'axios'
 import type { ReturnFormState, ReturnItem } from '@/types/returns'
 import { useStockStore } from './stockStore'
+
+const apiClient = axios.create({
+  baseURL: 'http://localhost:3000',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
 
 export const useReturnStore = defineStore('returns', () => {
   const stockStore = useStockStore()
@@ -14,6 +22,8 @@ export const useReturnStore = defineStore('returns', () => {
   })
 
   const isSubmitting = ref(false)
+  const successMessage = ref<string | null>(null)
+  const errorMessage = ref<string | null>(null)
 
   function addItem() {
     const newItem: ReturnItem = {
@@ -32,25 +42,66 @@ export const useReturnStore = defineStore('returns', () => {
     }
   }
 
+  function resetForm() {
+    form.date = new Date().toISOString().split('T')[0] ?? ''
+    form.type = 'Good'
+    form.dealer = ''
+    form.returnNoteNo = ''
+    form.items = []
+    addItem()
+    successMessage.value = null
+    errorMessage.value = null
+  }
+
   async function submitReturn() {
     isSubmitting.value = true
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    console.log('Submitting:', form)
+    successMessage.value = null
+    errorMessage.value = null
 
-    let transactionType = 'Return Stock'
-    if (form.type === 'Damage') transactionType = 'Damage Stock'
-    else if (form.type === 'Expired') transactionType = 'Expired Stock'
+    try {
+      // Validate items
+      const validItems = form.items.filter((item) => item.code && item.qty !== null)
 
-    stockStore.addTransaction({
-      id: crypto.randomUUID(),
-      date: form.date,
-      type: transactionType,
-      transactionId: form.returnNoteNo,
-      dealer: form.dealer,
-    })
+      if (validItems.length === 0) {
+        throw new Error('Please add at least one valid item with a code and quantity.')
+      }
 
-    isSubmitting.value = false
+      await apiClient.post('/returns', {
+        ...form,
+        items: validItems.map((item) => ({
+          code: item.code,
+          description: item.description,
+          qty: Number(item.qty),
+        })),
+      })
+
+      let transactionType = 'Return Stock'
+      if (form.type === 'Damage') transactionType = 'Damage Stock'
+      else if (form.type === 'Expired') transactionType = 'Expired Stock'
+
+      stockStore.addTransaction({
+        id: crypto.randomUUID(),
+        date: form.date,
+        type: transactionType,
+        transactionId: form.returnNoteNo,
+        dealer: form.dealer,
+      })
+
+      successMessage.value = 'Return submitted successfully!'
+
+      // Delay reset slightly to let user see success message, or keep it until they leave
+      // For now, we'll strip the items but keep the message
+      form.dealer = ''
+      form.returnNoteNo = ''
+      form.items = []
+      addItem()
+
+    } catch (error: any) {
+      console.error('Failed to submit return:', error)
+      errorMessage.value = error.response?.data?.message || error.message || 'Failed to submit return.'
+    } finally {
+      isSubmitting.value = false
+    }
   }
 
   // Initialize with one empty row
@@ -58,5 +109,5 @@ export const useReturnStore = defineStore('returns', () => {
     addItem()
   }
 
-  return { form, isSubmitting, addItem, removeItem, submitReturn }
+  return { form, isSubmitting, successMessage, errorMessage, addItem, removeItem, submitReturn, resetForm }
 })
