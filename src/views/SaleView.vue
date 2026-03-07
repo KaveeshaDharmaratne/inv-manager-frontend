@@ -18,4 +18,3 @@ import SaleForm from '../components/SaleForm.vue'
     </div>
   </main>
 </template>
-
