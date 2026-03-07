@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
-import { useSaleStore } from '@/stores/sales'
+import { useSaleStore } from '../stores/sales'
 import { storeToRefs } from 'pinia'
 
 const store = useSaleStore()
