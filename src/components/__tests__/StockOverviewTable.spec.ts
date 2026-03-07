@@ -4,6 +4,13 @@ import StockOverviewTable from '../StockOverviewTable.vue'
 import type { StockTransaction } from '@/types/stock'
 
 describe('StockOverviewTable', () => {
+  const baseProps = {
+    currentPage: 1,
+    totalPages: 1,
+    isLoading: false,
+    error: null,
+  }
+
   const mockTransactions: StockTransaction[] = [
     {
       id: '1',
@@ -30,7 +37,7 @@ describe('StockOverviewTable', () => {
 
   it('renders properly', () => {
     const wrapper = mount(StockOverviewTable, {
-      props: { transactions: [] },
+      props: { transactions: [], ...baseProps },
     })
     expect(wrapper.exists()).toBe(true)
     expect(wrapper.text()).toContain('DATE')
@@ -41,7 +48,7 @@ describe('StockOverviewTable', () => {
 
   it('renders transactions in descending date order', () => {
     const wrapper = mount(StockOverviewTable, {
-      props: { transactions: mockTransactions },
+      props: { transactions: mockTransactions, ...baseProps },
     })
 
     const rows = wrapper.findAll('tbody tr')
@@ -61,7 +68,7 @@ describe('StockOverviewTable', () => {
 
   it('displays "No transactions found" when list is empty', () => {
     const wrapper = mount(StockOverviewTable, {
-      props: { transactions: [] },
+      props: { transactions: [], ...baseProps },
     })
 
     expect(wrapper.text()).toContain('No transactions found')

@@ -5,3 +5,11 @@ export interface StockTransaction {
   transactionId: string
   dealer?: string
 }
+
+export interface PaginatedStockTransactions {
+  data: Omit<StockTransaction, 'id'>[]
+  total: number
+  page: number
+  limit: number
+  totalPages: number
+}

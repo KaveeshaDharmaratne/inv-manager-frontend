@@ -1,9 +1,18 @@
 <script setup lang="ts">
-import StockInfoCards from '@/components/StockInfoCards.vue'
-import StockOverviewTable from '@/components/StockOverviewTable.vue'
-import { useStockStore } from '@/stores/stockStore'
+import { onMounted } from 'vue'
+import StockInfoCards from '../components/StockInfoCards.vue'
+import StockOverviewTable from '../components/StockOverviewTable.vue'
+import { useStockStore } from '../stores/stockStore'
 
 const stockStore = useStockStore()
+
+onMounted(() => {
+  stockStore.fetchRecentTransactions()
+})
+
+const handlePageChange = (page: number) => {
+  stockStore.fetchRecentTransactions(page)
+}
 </script>
 
 <template>
@@ -22,7 +31,14 @@ const stockStore = useStockStore()
       <StockInfoCards />
 
       <div class="mt-8">
-        <StockOverviewTable :transactions="stockStore.transactions" />
+        <StockOverviewTable
+          :transactions="stockStore.transactions"
+          :current-page="stockStore.currentPage"
+          :total-pages="stockStore.totalPages"
+          :is-loading="stockStore.isLoading"
+          :error="stockStore.error"
+          @change-page="handlePageChange"
+        />
       </div>
     </div>
   </main>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SaleForm from '@/components/SaleForm.vue'
+import SaleForm from '../components/SaleForm.vue'
 </script>
 
 <template>
@@ -18,3 +18,4 @@ import SaleForm from '@/components/SaleForm.vue'
     </div>
   </main>
 </template>
+
