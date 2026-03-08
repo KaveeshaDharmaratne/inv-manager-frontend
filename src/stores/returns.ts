@@ -66,7 +66,7 @@ export const useReturnStore = defineStore('returns', () => {
         throw new Error('Please add at least one valid item with a code and quantity.')
       }
 
-      await apiClient.post('/returns', {
+      await apiClient.post('/api/v1/returns', {
         ...form,
         items: validItems.map((item) => ({
           code: item.code,
