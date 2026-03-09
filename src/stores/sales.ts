@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import { reactive, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import type { InvoiceDetails, InvoiceItem } from '@/types/invoice'
+import { createInvoice } from '@/api/invoices'
 import { useProductStore } from './productStore'
 import { useStockStore } from './stockStore'
 
@@ -15,6 +16,10 @@ export const useSaleStore = defineStore('sales', () => {
     items: [],
   })
 
+  const isSubmitting = ref(false)
+  const successMessage = ref<string | null>(null)
+  const errorMessage = ref<string | null>(null)
+
   const newItem = reactive({
     code: '',
     description: '',
@@ -24,9 +29,16 @@ export const useSaleStore = defineStore('sales', () => {
   // Watcher for auto-description
   watch(
     () => newItem.code,
-    (newCode) => {
-      const product = productStore.getProductByCode(newCode)
-      newItem.description = product?.description ?? ''
+    async (newCode) => {
+      if (!newCode || newCode.length < 5) {
+        newItem.description = ''
+        return
+      }
+      const product = await productStore.fetchProductByCode(newCode)
+      // Only update if code hasn't changed during the fetch
+      if (newItem.code === newCode) {
+        newItem.description = product?.description ?? ''
+      }
     },
   )
 
@@ -56,22 +68,43 @@ export const useSaleStore = defineStore('sales', () => {
 
   async function submitSale() {
     if (form.items.length === 0) return
-    console.log('Submitting Invoice:', form)
+    if (isSubmitting.value) return
 
-    stockStore.addTransaction({
-      id: crypto.randomUUID(),
-      date: form.date,
-      type: 'Invoice',
-      transactionId: form.invoiceNumber,
-      dealer: form.dealer,
-    })
+    isSubmitting.value = true
+    successMessage.value = null
+    errorMessage.value = null
 
-    // API call logic here
+    try {
+      await createInvoice(form)
+
+      stockStore.addTransaction({
+        id: crypto.randomUUID(),
+        date: form.date,
+        type: 'Invoice',
+        transactionId: form.invoiceNumber,
+        dealer: form.dealer,
+      })
+
+      successMessage.value = 'Invoice submitted successfully!'
+
+      form.dealer = ''
+      form.invoiceNumber = ''
+      form.items = []
+    } catch (error: any) {
+      console.error('Failed to submit invoice:', error)
+      errorMessage.value =
+        error.response?.data?.message || error.message || 'Failed to submit invoice.'
+    } finally {
+      isSubmitting.value = false
+    }
   }
 
   return {
     form,
     newItem,
+    isSubmitting,
+    successMessage,
+    errorMessage,
     addItem,
     removeItem,
     submitSale,

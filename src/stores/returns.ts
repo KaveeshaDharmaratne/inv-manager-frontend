@@ -1,15 +1,8 @@
 import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue'
-import axios from 'axios'
 import type { ReturnFormState, ReturnItem } from '@/types/returns'
+import { createReturn } from '@/api/returns'
 import { useStockStore } from './stockStore'
-
-const apiClient = axios.create({
-  baseURL: 'http://localhost:3000',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
 
 export const useReturnStore = defineStore('returns', () => {
   const stockStore = useStockStore()
@@ -59,21 +52,7 @@ export const useReturnStore = defineStore('returns', () => {
     errorMessage.value = null
 
     try {
-      // Validate items
-      const validItems = form.items.filter((item) => item.code && item.qty !== null)
-
-      if (validItems.length === 0) {
-        throw new Error('Please add at least one valid item with a code and quantity.')
-      }
-
-      await apiClient.post('/api/v1/returns', {
-        ...form,
-        items: validItems.map((item) => ({
-          code: item.code,
-          description: item.description,
-          qty: Number(item.qty),
-        })),
-      })
+      await createReturn(form)
 
       let transactionType = 'Return Stock'
       if (form.type === 'Damage') transactionType = 'Damage Stock'

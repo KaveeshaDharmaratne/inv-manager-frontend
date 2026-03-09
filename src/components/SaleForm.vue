@@ -4,7 +4,7 @@ import { useSaleStore } from '../stores/sales'
 import { storeToRefs } from 'pinia'
 
 const store = useSaleStore()
-const { form, newItem } = storeToRefs(store)
+const { form, newItem, successMessage, errorMessage } = storeToRefs(store)
 const { addItem, removeItem, submitSale } = store
 
 const codeInputRef = ref<HTMLInputElement | null>(null)
@@ -35,6 +35,37 @@ const handleSubmit = () => {
 </script>
 
 <template>
+  <div>
+  <!-- Feedback Alerts -->
+  <div v-if="successMessage" class="mb-6 p-4 rounded-md bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div class="ml-3">
+        <p class="text-sm font-medium text-green-800 dark:text-green-300">{{ successMessage }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div v-if="errorMessage" class="mb-6 p-4 rounded-md bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div class="ml-3">
+        <h3 class="text-sm font-medium text-red-800 dark:text-red-300">Error submitting invoice</h3>
+        <div class="mt-2 text-sm text-red-700 dark:text-red-400">
+          <p>{{ errorMessage }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <section
     class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
   >
@@ -213,7 +244,7 @@ const handleSubmit = () => {
         <div class="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700 mt-4">
           <button
             type="submit"
-            :disabled="form.items.length === 0"
+            :disabled="form.items.length === 0 || store.isSubmitting"
             class="inline-flex justify-center items-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Submit Invoice
@@ -222,4 +253,5 @@ const handleSubmit = () => {
       </div>
     </form>
   </section>
+  </div>
 </template>
