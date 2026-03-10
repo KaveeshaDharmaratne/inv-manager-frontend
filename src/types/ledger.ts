@@ -1,11 +1,10 @@
 export interface LedgerEntry {
-  id: string
   date: string // ISO date string eg. '2024-06-15'
-  transactionType: 'INV' | 'GRN' | 'ADJ' // Union type for transaction types
+  transactionType: string
   transactionNo: string
   dealer: string
-  inQty?: number // Optional property
-  outQty?: number // Optional property
+  inQty?: number | null
+  outQty?: number | null
   balance: number
 }
 
@@ -13,5 +12,9 @@ export interface LedgerFilter {
   fromDate: string
   toDate: string
   productCode: string
-  description: string
+}
+
+export interface LedgerResponse {
+  item: { code: string; description: string }
+  entries: LedgerEntry[]
 }

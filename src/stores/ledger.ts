@@ -1,60 +1,43 @@
 import type { LedgerEntry, LedgerFilter } from '@/types/ledger'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
+import apiClient from '@/api/axios'
 
 export const useLedgerStore = defineStore('ledger', () => {
   const entries = ref<LedgerEntry[]>([])
   const isLoading = ref(false)
-
-  // Mock data
-  const mockData: LedgerEntry[] = [
-    {
-      id: '1',
-      date: '2024-01-01',
-      transactionType: 'INV',
-      transactionNo: 'INV001',
-      dealer: 'Dealer A',
-      outQty: 10,
-      balance: 90,
-    },
-    {
-      id: '2',
-      date: '2024-01-02',
-      transactionType: 'GRN',
-      transactionNo: 'GRN001',
-      dealer: 'Dealer B',
-      inQty: 0,
-      balance: 100,
-    },
-    {
-      id: '3',
-      date: '2024-01-03',
-      transactionType: 'ADJ',
-      transactionNo: 'ADJ001',
-      dealer: 'Dealer C',
-      outQty: 5,
-      balance: 50,
-    },
-  ]
+  const itemDescription = ref('')
 
   // --- Actions ---
-  async function fetchEntries(_filter: LedgerFilter) {
+  async function fetchEntries(filter: LedgerFilter) {
+    if (!filter.productCode || !filter.fromDate || !filter.toDate) {
+      entries.value = []
+      itemDescription.value = ''
+      return
+    }
+
     isLoading.value = true
-
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500))
-
-    // In a real app, you would pass 'filter' to an API call here
-    entries.value = mockData
-    isLoading.value = false
+    try {
+      const { data } = await apiClient.get(
+        `/api/v1/items/${encodeURIComponent(filter.productCode)}/ledger`,
+        { params: { from: filter.fromDate, to: filter.toDate } },
+      )
+      entries.value = data.entries ?? []
+      itemDescription.value = data.item?.description ?? ''
+    } catch (err) {
+      console.error('Failed to fetch ledger entries', err)
+      entries.value = []
+      itemDescription.value = ''
+    } finally {
+      isLoading.value = false
+    }
   }
 
   // --- Getters ---
-  // Example getter: calculate total balance dynamically
   const currentBalance = computed(() => {
     if (entries.value.length === 0) return 0
-    return entries.value[0]?.balance // Assuming first entry is latest
+    return entries.value[entries.value.length - 1]?.balance ?? 0
   })
 
-  return { entries, isLoading, fetchEntries, currentBalance }
+  return { entries, isLoading, itemDescription, fetchEntries, currentBalance }
 })

@@ -1,58 +1,62 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { StockMetrics } from '@/types/dashboard'
+import type { StockMetrics, ProductItem, StockCardFilter } from '@/types/dashboard'
+import apiClient from '@/api/axios'
 
 export const useDashboardStore = defineStore('dashboard', () => {
-  // Initial State(Mock Data)
   const metrics = ref<StockMetrics>({
-    totalProducts: 1200,
-    newProductsCount: 60,
-    lowStockCount: 40,
-    urgentReorderCount: 30,
-    outOfStockCount: 16,
-    totalStockValue: 630000,
+    totalProducts: 0,
+    lowStockCount: 0,
+    outOfStockCount: 0,
   })
 
-  let intervalId: number | null = null
+  const activeFilter = ref<StockCardFilter>(null)
+  const products = ref<ProductItem[]>([])
+  const isLoadingProducts = ref(false)
 
-  // --- Actions ---
   const fetchMetrics = async () => {
-    // Simulate API call here
-    console.log('Fetching dashboard metrics...')
+    try {
+      const response = await apiClient.get<StockMetrics>('/stock-overview/metrics')
+      metrics.value = response.data
+    } catch (err) {
+      console.error('Failed to fetch metrics:', err)
+    }
   }
 
-  // Simulate realtime updates
-  const startRealtimeUpdates = () => {
-    if (intervalId) return
+  const fetchProducts = async (filter: StockCardFilter) => {
+    if (!filter) {
+      products.value = []
+      activeFilter.value = null
+      return
+    }
 
-    intervalId = window.setInterval(() => {
-      // Simulate random fluctuations
-      metrics.value.totalProducts = Math.max(
-        0,
-        metrics.value.totalProducts + Math.floor(Math.random() * 3) - 1,
-      )
-      metrics.value.lowStockCount = Math.max(
-        0,
-        metrics.value.lowStockCount + Math.floor(Math.random() * 3) - 1,
-      )
-      // Random toggle low stock count
-      if (Math.random() > 0.7) {
-        metrics.value.lowStockCount += Math.floor(Math.random() * 3) - 1
-      }
-    }, 3000) // Update every 3 seconds
-  }
+    // Toggle off if same filter clicked again
+    if (activeFilter.value === filter) {
+      products.value = []
+      activeFilter.value = null
+      return
+    }
 
-  const stopRealtimeUpdates = () => {
-    if (intervalId) {
-      clearInterval(intervalId)
-      intervalId = null
+    isLoadingProducts.value = true
+    activeFilter.value = filter
+
+    try {
+      const response = await apiClient.get<ProductItem[]>(`/stock-overview/products/${filter}`)
+      products.value = response.data
+    } catch (err) {
+      console.error('Failed to fetch products:', err)
+      products.value = []
+    } finally {
+      isLoadingProducts.value = false
     }
   }
 
   return {
     metrics,
+    activeFilter,
+    products,
+    isLoadingProducts,
     fetchMetrics,
-    startRealtimeUpdates,
-    stopRealtimeUpdates,
+    fetchProducts,
   }
 })

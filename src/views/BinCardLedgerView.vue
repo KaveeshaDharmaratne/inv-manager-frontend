@@ -2,17 +2,12 @@
 import { useLedgerStore } from '@/stores/ledger'
 import type { LedgerFilter } from '@/types/ledger'
 import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
 import LedgerFilterForm from '@/components/LedgerFilter.vue'
 import LedgerTable from '@/components/LedgerTable.vue'
 
 const store = useLedgerStore()
 const { entries, currentBalance, isLoading } = storeToRefs(store)
 const { fetchEntries } = store
-
-onMounted(() => {
-  fetchEntries({ fromDate: '', toDate: '', productCode: '', description: '' })
-})
 
 const handleFilterSubmit = (filters: LedgerFilter) => {
   fetchEntries(filters)
@@ -25,7 +20,9 @@ const handleFilterSubmit = (filters: LedgerFilter) => {
       <!--Header Section-->
       <div class="mb-10">
         <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Bin Card Ledger</h1>
-        <p class="mt-2 text-sm text-gray-500">View and manage your product ledger.</p>
+        <p class="mt-2 text-sm text-gray-500">
+          Enter a product code and date range to view all transactions for that item.
+        </p>
       </div>
 
       <main>
