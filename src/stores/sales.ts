@@ -4,6 +4,7 @@ import type { InvoiceDetails, InvoiceItem } from '@/types/invoice'
 import { createInvoice } from '@/api/invoices'
 import { useProductStore } from './productStore'
 import { useStockStore } from './stockStore'
+import { useTimedFlashMessages } from '@/composables/useTimedFlashMessages'
 
 export const useSaleStore = defineStore('sales', () => {
   const productStore = useProductStore()
@@ -17,8 +18,13 @@ export const useSaleStore = defineStore('sales', () => {
   })
 
   const isSubmitting = ref(false)
-  const successMessage = ref<string | null>(null)
-  const errorMessage = ref<string | null>(null)
+  const {
+    successMessage,
+    errorMessage,
+    showSuccessMessage,
+    showErrorMessage,
+    clearMessages,
+  } = useTimedFlashMessages()
 
   const newItem = reactive({
     code: '',
@@ -71,8 +77,7 @@ export const useSaleStore = defineStore('sales', () => {
     if (isSubmitting.value) return
 
     isSubmitting.value = true
-    successMessage.value = null
-    errorMessage.value = null
+    clearMessages()
 
     try {
       await createInvoice(form)
@@ -85,15 +90,18 @@ export const useSaleStore = defineStore('sales', () => {
         dealer: form.dealer,
       })
 
-      successMessage.value = 'Invoice submitted successfully!'
+      showSuccessMessage('Invoice submitted successfully!')
 
       form.dealer = ''
       form.invoiceNumber = ''
       form.items = []
     } catch (error: any) {
       console.error('Failed to submit invoice:', error)
-      errorMessage.value =
-        error.response?.data?.message || error.message || 'Failed to submit invoice.'
+      showErrorMessage(
+        error.response?.data?.message ||
+          error.message ||
+          'Failed to submit invoice.',
+      )
     } finally {
       isSubmitting.value = false
     }

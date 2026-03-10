@@ -4,6 +4,7 @@ import type { ReturnFormState, ReturnItem } from '@/types/returns'
 import { createReturn } from '@/api/returns'
 import { useProductStore } from './productStore'
 import { useStockStore } from './stockStore'
+import { useTimedFlashMessages } from '@/composables/useTimedFlashMessages'
 
 export const useReturnStore = defineStore('returns', () => {
   const productStore = useProductStore()
@@ -17,8 +18,13 @@ export const useReturnStore = defineStore('returns', () => {
   })
 
   const isSubmitting = ref(false)
-  const successMessage = ref<string | null>(null)
-  const errorMessage = ref<string | null>(null)
+  const {
+    successMessage,
+    errorMessage,
+    showSuccessMessage,
+    showErrorMessage,
+    clearMessages,
+  } = useTimedFlashMessages()
 
   const newItem = reactive({
     code: '',
@@ -70,14 +76,12 @@ export const useReturnStore = defineStore('returns', () => {
     form.returnNoteNo = ''
     form.items = []
     addItem()
-    successMessage.value = null
-    errorMessage.value = null
+    clearMessages()
   }
 
   async function submitReturn() {
     isSubmitting.value = true
-    successMessage.value = null
-    errorMessage.value = null
+    clearMessages()
 
     try {
       await createReturn(form)
@@ -94,7 +98,7 @@ export const useReturnStore = defineStore('returns', () => {
         dealer: form.dealer,
       })
 
-      successMessage.value = 'Return submitted successfully!'
+      showSuccessMessage('Return submitted successfully!')
 
       form.dealer = ''
       form.returnNoteNo = ''
@@ -102,7 +106,11 @@ export const useReturnStore = defineStore('returns', () => {
 
     } catch (error: any) {
       console.error('Failed to submit return:', error)
-      errorMessage.value = error.response?.data?.message || error.message || 'Failed to submit return.'
+      showErrorMessage(
+        error.response?.data?.message ||
+          error.message ||
+          'Failed to submit return.',
+      )
     } finally {
       isSubmitting.value = false
     }
