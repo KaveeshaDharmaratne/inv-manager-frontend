@@ -50,7 +50,9 @@ const handlePageChange = (page: number) => {
       <!-- Products table shown when a card is clicked -->
       <div v-if="activeFilter" class="mt-8">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ filterLabel }}</h3>
-        <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-gray-100 dark:border-zinc-800 overflow-hidden">
+        <div
+          class="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-gray-100 dark:border-zinc-800 overflow-hidden"
+        >
           <div v-if="isLoadingProducts" class="px-6 py-4 text-center text-sm text-gray-500">
             Loading products...
           </div>
@@ -58,23 +60,56 @@ const handlePageChange = (page: number) => {
             <table class="min-w-full divide-y divide-gray-200 dark:divide-zinc-700">
               <thead class="bg-gray-50 dark:bg-zinc-800">
                 <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">Code</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">Description</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">Quantity</th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider"
+                  >
+                    Code
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider"
+                  >
+                    Description
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider"
+                  >
+                    Quantity
+                  </th>
                 </tr>
               </thead>
-              <tbody class="bg-white dark:bg-zinc-900 divide-y divide-gray-200 dark:divide-zinc-700">
+              <tbody
+                class="bg-white dark:bg-zinc-900 divide-y divide-gray-200 dark:divide-zinc-700"
+              >
                 <tr
                   v-for="product in products"
                   :key="product.code"
                   class="hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors"
                 >
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ product.code }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-zinc-400">{{ product.description || '-' }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm" :class="product.quantity === 0 ? 'text-red-600 font-semibold' : product.quantity < 10 ? 'text-yellow-600 font-semibold' : 'text-gray-900 dark:text-white'">{{ product.quantity }}</td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    {{ product.code }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-zinc-400">
+                    {{ product.description || '-' }}
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-sm"
+                    :class="
+                      product.quantity === 0
+                        ? 'text-red-600 font-semibold'
+                        : product.quantity < 10
+                          ? 'text-yellow-600 font-semibold'
+                          : 'text-gray-900 dark:text-white'
+                    "
+                  >
+                    {{ product.quantity }}
+                  </td>
                 </tr>
                 <tr v-if="products.length === 0">
-                  <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">No products found</td>
+                  <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">
+                    No products found
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -83,7 +118,9 @@ const handlePageChange = (page: number) => {
       </div>
 
       <div class="mt-8">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Transactions</h3>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          Recent Transactions
+        </h3>
         <StockOverviewTable
           :transactions="stockStore.transactions"
           :current-page="stockStore.currentPage"

@@ -12,9 +12,7 @@ export const useDamageStore = defineStore('damage', () => {
     isLoading.value = true
     try {
       const { data } = await fetchReturns()
-      const damageReturns = data.filter(
-        (r: any) => r.type === 'Damage',
-      )
+      const damageReturns = data.filter((r: any) => r.type === 'Damage')
       items.value = damageReturns.flatMap((r: any) =>
         (r.items ?? []).map((ri: any) => ({
           id: `${r.returnNoteNo}-${ri.itemCode}`,

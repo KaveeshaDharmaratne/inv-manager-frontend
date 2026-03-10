@@ -18,13 +18,8 @@ export const useReturnStore = defineStore('returns', () => {
   })
 
   const isSubmitting = ref(false)
-  const {
-    successMessage,
-    errorMessage,
-    showSuccessMessage,
-    showErrorMessage,
-    clearMessages,
-  } = useTimedFlashMessages()
+  const { successMessage, errorMessage, showSuccessMessage, showErrorMessage, clearMessages } =
+    useTimedFlashMessages()
 
   const newItem = reactive({
     code: '',
@@ -103,18 +98,23 @@ export const useReturnStore = defineStore('returns', () => {
       form.dealer = ''
       form.returnNoteNo = ''
       form.items = []
-
     } catch (error: any) {
       console.error('Failed to submit return:', error)
-      showErrorMessage(
-        error.response?.data?.message ||
-          error.message ||
-          'Failed to submit return.',
-      )
+      showErrorMessage(error.response?.data?.message || error.message || 'Failed to submit return.')
     } finally {
       isSubmitting.value = false
     }
   }
 
-  return { form, newItem, isSubmitting, successMessage, errorMessage, addItem, removeItem, submitReturn, resetForm }
+  return {
+    form,
+    newItem,
+    isSubmitting,
+    successMessage,
+    errorMessage,
+    addItem,
+    removeItem,
+    submitReturn,
+    resetForm,
+  }
 })

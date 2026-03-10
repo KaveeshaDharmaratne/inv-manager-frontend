@@ -18,13 +18,8 @@ export const useSaleStore = defineStore('sales', () => {
   })
 
   const isSubmitting = ref(false)
-  const {
-    successMessage,
-    errorMessage,
-    showSuccessMessage,
-    showErrorMessage,
-    clearMessages,
-  } = useTimedFlashMessages()
+  const { successMessage, errorMessage, showSuccessMessage, showErrorMessage, clearMessages } =
+    useTimedFlashMessages()
 
   const newItem = reactive({
     code: '',
@@ -98,9 +93,7 @@ export const useSaleStore = defineStore('sales', () => {
     } catch (error: any) {
       console.error('Failed to submit invoice:', error)
       showErrorMessage(
-        error.response?.data?.message ||
-          error.message ||
-          'Failed to submit invoice.',
+        error.response?.data?.message || error.message || 'Failed to submit invoice.',
       )
     } finally {
       isSubmitting.value = false
