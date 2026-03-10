@@ -21,6 +21,8 @@ const typeLabel = (type: string) => {
       return 'Damage Return'
     case 'EXP':
       return 'Expired Return'
+    case 'GDN':
+      return 'GDN Restock'
     default:
       return type
   }
@@ -36,6 +38,8 @@ const typeBadgeClass = (type: string) => {
       return 'bg-amber-100 text-amber-700'
     case 'EXP':
       return 'bg-red-100 text-red-700'
+    case 'GDN':
+      return 'bg-cyan-100 text-cyan-700'
     default:
       return 'bg-gray-100 text-gray-700'
   }

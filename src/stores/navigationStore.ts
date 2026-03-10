@@ -20,6 +20,7 @@ export const useNavigationStore = defineStore('navigation', () => {
       children: [
         { label: 'Sale', to: '/transactions/sale' },
         { label: 'Return', to: '/transactions/return' },
+        { label: 'GDN', to: '/transactions/gdn' },
       ],
     },
     {

@@ -22,6 +22,7 @@ const navItems = ref<NavItem[]>([
     children: [
       { label: 'Sale', to: '/transactions/sale' },
       { label: 'Return', to: '/transactions/return' },
+      { label: 'GDN', to: '/transactions/gdn' },
     ],
   },
   {

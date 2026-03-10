@@ -27,6 +27,11 @@ const router = createRouter({
       component: () => import('../views/ReturnView.vue'),
     },
     {
+      path: '/transactions/gdn',
+      name: 'transactions-gdn',
+      component: () => import('../views/GdnView.vue'),
+    },
+    {
       path: '/reports/stock',
       name: 'reports-stock',
       component: Placeholder,
