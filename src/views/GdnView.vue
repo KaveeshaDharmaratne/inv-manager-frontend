@@ -7,9 +7,7 @@ import GdnForm from '@/components/GdnForm.vue'
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="mb-10">
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">GDN</h1>
-        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-          Restock inventory.
-        </p>
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Restock inventory.</p>
       </div>
 
       <GdnForm />

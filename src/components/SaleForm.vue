@@ -15,8 +15,8 @@ const inputClass =
 
 // --- Logic ---
 
-const handleAddItem = () => {
-  const success = addItem()
+const handleAddItem = async () => {
+  const success = await addItem()
   if (success) {
     // UX: Refocus the code input for rapid entry
     nextTick(() => {

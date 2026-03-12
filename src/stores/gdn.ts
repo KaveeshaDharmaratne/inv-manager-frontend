@@ -41,15 +41,25 @@ export const useGdnStore = defineStore('gdn', () => {
     },
   )
 
-  function addItem() {
+  async function addItem() {
     if (!newItem.code || newItem.quantity <= 0) {
+      return false
+    }
+
+    clearMessages()
+
+    const product = await productStore.fetchProductByCode(newItem.code)
+    if (!product) {
+      showErrorMessage(
+        `Item code ${newItem.code} does not exist. Create it in the item master first.`,
+      )
       return false
     }
 
     const item: GdnItem = {
       id: crypto.randomUUID(),
       code: newItem.code,
-      description: newItem.description || 'Unknown Item',
+      description: product.description,
       quantity: newItem.quantity,
     }
 

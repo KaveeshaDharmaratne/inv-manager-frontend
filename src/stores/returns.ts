@@ -42,13 +42,23 @@ export const useReturnStore = defineStore('returns', () => {
     },
   )
 
-  function addItem() {
+  async function addItem() {
     if (!newItem.code || newItem.qty <= 0) return false
+
+    clearMessages()
+
+    const product = await productStore.fetchProductByCode(newItem.code)
+    if (!product) {
+      showErrorMessage(
+        `Item code ${newItem.code} does not exist. Create it in the item master first.`,
+      )
+      return false
+    }
 
     const item: ReturnItem = {
       id: Date.now().toString() + Math.random().toString(36).substring(2),
       code: newItem.code,
-      description: newItem.description || 'Unknown Item',
+      description: product.description,
       qty: newItem.qty,
     }
     form.items.push(item)
@@ -70,7 +80,6 @@ export const useReturnStore = defineStore('returns', () => {
     form.dealer = ''
     form.returnNoteNo = ''
     form.items = []
-    addItem()
     clearMessages()
   }
 

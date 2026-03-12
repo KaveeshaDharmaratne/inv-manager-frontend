@@ -1,31 +1,59 @@
 import { setActivePinia, createPinia } from 'pinia'
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useReturnStore } from '@/stores/returns'
+import apiClient from '@/api/axios'
+
+vi.mock('@/api/axios', () => ({
+  default: {
+    get: vi.fn(),
+  },
+}))
 
 describe('Return Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
+    vi.clearAllMocks()
   })
 
-  it('initializes with one empty item', () => {
+  it('initializes with an empty item list and Good return type', () => {
     const store = useReturnStore()
-    expect(store.form.items.length).toBe(1)
+    expect(store.form.items.length).toBe(0)
     expect(store.form.type).toBe('Good')
   })
 
-  it('adds a new item', () => {
+  it('adds an item only when the code exists in the item master', async () => {
+    vi.mocked(apiClient.get).mockResolvedValue({
+      data: { code: '12345', description: 'Item A' },
+    })
+
     const store = useReturnStore()
-    store.addItem()
-    expect(store.form.items.length).toBe(2)
-    expect(store.form.items[1]?.qty).toBeNull()
+    store.newItem.code = '12345'
+    store.newItem.qty = 2
+
+    const success = await store.addItem()
+
+    expect(success).toBe(true)
+    expect(store.form.items).toEqual([
+      expect.objectContaining({
+        code: '12345',
+        description: 'Item A',
+        qty: 2,
+      }),
+    ])
+    expect(store.errorMessage).toBeNull()
   })
 
-  it('removes an item by id', () => {
+  it('rejects unknown item codes before adding them to the form', async () => {
+    vi.mocked(apiClient.get).mockRejectedValue(new Error('Not found'))
+
     const store = useReturnStore()
-    const firstItemId = store.form.items[0]?.id
-    store.addItem()
-    if (firstItemId) store.removeItem(firstItemId)
-    expect(store.form.items.length).toBe(1)
-    expect(store.form.items[0]?.id).not.toBe(firstItemId)
+    store.newItem.code = '99999'
+    store.newItem.qty = 1
+
+    const success = await store.addItem()
+
+    expect(success).toBe(false)
+    expect(store.form.items).toHaveLength(0)
+    expect(store.errorMessage).toContain('Item code 99999 does not exist')
   })
 })
