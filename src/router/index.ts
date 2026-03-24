@@ -32,6 +32,12 @@ const router = createRouter({
       component: () => import('../views/GdnView.vue'),
     },
     {
+      path: '/transactions/view/:type/:id',
+      name: 'transaction-view',
+      component: () => import('../views/InvoiceView.vue'),
+      props: true,
+    },
+    {
       path: '/reports/stock',
       name: 'reports-stock',
       component: Placeholder,
@@ -44,7 +50,7 @@ const router = createRouter({
     {
       path: '/reports/daily',
       name: 'reports-daily',
-      component: Placeholder,
+      component: () => import('../views/DailyStockView.vue'),
     },
   ],
 })

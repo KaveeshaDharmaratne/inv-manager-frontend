@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { format, parseISO } from 'date-fns'
 import type { StockTransaction } from '../types/stock'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{
   transactions: StockTransaction[]
@@ -37,6 +38,13 @@ const formatDate = (dateString: string) => {
   } catch {
     return dateString
   }
+}
+
+const router = useRouter()
+
+const openTransaction = (entry: StockTransaction) => {
+  // entry.type should match Invoice/Return/GDN
+  router.push({ name: 'transaction-view', params: { type: entry.type, id: entry.transactionId } })
 }
 </script>
 
@@ -86,7 +94,8 @@ const formatDate = (dateString: string) => {
           <tr
             v-for="entry in sortedTransactions"
             :key="entry.id"
-            class="hover:bg-gray-50 transition-colors"
+            class="hover:bg-gray-50 transition-colors cursor-pointer"
+            @click="openTransaction(entry)"
           >
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
               {{ formatDate(entry.date) }}
