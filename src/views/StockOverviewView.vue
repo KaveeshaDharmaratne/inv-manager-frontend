@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue'
 import StockInfoCards from '../components/StockInfoCards.vue'
+import StockFilterBar from '../components/StockFilterBar.vue'
 import StockOverviewTable from '../components/StockOverviewTable.vue'
 import { useStockStore } from '../stores/stockStore'
 import { useDashboardStore } from '../stores/dashboard'
@@ -29,6 +30,14 @@ onMounted(() => {
 
 const handlePageChange = (page: number) => {
   stockStore.fetchRecentTransactions(page)
+}
+
+const handleApplyFilters = (filters: { startDate?: string | null; endDate?: string | null; type?: string | null }) => {
+  stockStore.fetchRecentTransactions(1, { startDate: filters.startDate ?? null, endDate: filters.endDate ?? null, type: filters.type ?? null })
+}
+
+const handleClearFilters = () => {
+  stockStore.fetchRecentTransactions(1, { startDate: null, endDate: null, type: null })
 }
 </script>
 
@@ -118,6 +127,8 @@ const handlePageChange = (page: number) => {
       </div>
 
       <div class="mt-8">
+        <StockFilterBar @apply="handleApplyFilters" @clear="handleClearFilters" />
+
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Recent Transactions
         </h3>

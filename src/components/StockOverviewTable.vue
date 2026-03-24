@@ -46,6 +46,31 @@ const openTransaction = (entry: StockTransaction) => {
   // entry.type should match Invoice/Return/GDN
   router.push({ name: 'transaction-view', params: { type: entry.type, id: entry.transactionId } })
 }
+
+const displayLabel = (type: string, subtype?: string | null) => {
+  if (type === 'Return') {
+    const s = (subtype || '').toLowerCase()
+    if (s.includes('damage')) return 'Return (Damage)'
+    if (s.includes('good')) return 'Return (Good)'
+    return 'Return'
+  }
+
+  if (type === 'Invoice') return 'Invoice'
+  if (type === 'GDN') return 'GDN'
+  return type
+}
+
+const badgeClass = (type: string, subtype?: string | null) => {
+  if (type === 'Invoice') return 'inline-flex px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800'
+  if (type === 'GDN') return 'inline-flex px-2 py-0.5 rounded text-xs font-semibold bg-green-100 text-green-800'
+  if (type === 'Return') {
+    const s = (subtype || '').toLowerCase()
+    if (s.includes('damage')) return 'inline-flex px-2 py-0.5 rounded text-xs font-semibold bg-red-100 text-red-800'
+    if (s.includes('good')) return 'inline-flex px-2 py-0.5 rounded text-xs font-semibold bg-yellow-100 text-yellow-800'
+    return 'inline-flex px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-800'
+  }
+  return 'inline-flex px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-800'
+}
 </script>
 
 <template>
@@ -101,7 +126,7 @@ const openTransaction = (entry: StockTransaction) => {
               {{ formatDate(entry.date) }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              {{ entry.type }}
+              <span :class="badgeClass(entry.type, entry.subtype)">{{ displayLabel(entry.type, entry.subtype) }}</span>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
               {{ entry.transactionId }}

@@ -25,6 +25,7 @@ export const useSaleStore = defineStore('sales', () => {
     code: '',
     description: '',
     quantity: 1,
+    availableQty: 0,
   })
 
   // Watcher for auto-description
@@ -39,12 +40,20 @@ export const useSaleStore = defineStore('sales', () => {
       // Only update if code hasn't changed during the fetch
       if (newItem.code === newCode) {
         newItem.description = product?.description ?? ''
+        newItem.availableQty = product?.availableQty ?? 0
       }
     },
   )
 
   async function addItem() {
-    if (!newItem.code || newItem.quantity <= 0) return false
+    if (!newItem.code) return false
+
+    // Normalize and validate quantity
+    const qty = Number(newItem.quantity)
+    if (!Number.isFinite(qty) || qty <= 0 || !Number.isInteger(qty)) {
+      showErrorMessage('Please enter a valid quantity.')
+      return false
+    }
 
     clearMessages()
 
@@ -56,11 +65,19 @@ export const useSaleStore = defineStore('sales', () => {
       return false
     }
 
+    // Check availability
+    if ((product.availableQty ?? 0) < qty) {
+      showErrorMessage(
+        `Insufficient stock for ${newItem.description}. Available: ${product.availableQty ?? 0}`,
+      )
+      return false
+    }
+
     const item: InvoiceItem = {
       id: crypto.randomUUID(),
       code: newItem.code,
       description: product.description,
-      quantity: newItem.quantity,
+      quantity: qty,
     }
 
     form.items.push(item)
@@ -68,6 +85,7 @@ export const useSaleStore = defineStore('sales', () => {
     // Reset new item inputs
     newItem.code = ''
     newItem.description = ''
+    newItem.availableQty = 0
     newItem.quantity = 1
 
     return true

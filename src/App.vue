@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import AppNavbar from './components/AppNavbar.vue'
+import FlashMessages from './components/FlashMessages.vue'
 </script>
 
 <template>
   <div
     class="flex h-screen bg-background-light dark:bg-background-dark text-zinc-800 dark:text-zinc-200 font-display"
   >
+    <FlashMessages />
     <aside
       class="w-64 bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 flex flex-col"
     >

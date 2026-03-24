@@ -14,7 +14,11 @@ export const useProductStore = defineStore('product', () => {
     try {
       const { data } = await apiClient.get(`/api/v1/items/${encodeURIComponent(code)}`)
       if (data?.code) {
-        const product: Product = { code: data.code, description: data.description ?? '' }
+        const product: Product = {
+          code: data.code,
+          description: data.description ?? '',
+          availableQty: data.quantity ?? 0,
+        }
         // Cache locally
         products.value.push(product)
         return product

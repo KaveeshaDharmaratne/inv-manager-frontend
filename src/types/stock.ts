@@ -2,6 +2,7 @@ export interface StockTransaction {
   id: string
   date: string
   type: string
+  subtype?: string | null
   transactionId: string
   dealer?: string
 }

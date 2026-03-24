@@ -8,6 +8,7 @@ export interface InvoiceItem {
 export interface Product {
   code: string
   description: string
+  availableQty?: number
 }
 
 export interface InvoiceDetails {

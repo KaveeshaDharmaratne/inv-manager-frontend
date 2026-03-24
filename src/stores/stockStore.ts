@@ -11,14 +11,24 @@ export const useStockStore = defineStore('stock', () => {
   const pageSize = ref(10)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
+  const startDate = ref<string | null>(null)
+  const endDate = ref<string | null>(null)
+  const transactionType = ref<string | null>(null)
 
   function addTransaction(transaction: StockTransaction) {
     transactions.value.push(transaction)
   }
 
-  async function fetchRecentTransactions(page = 1) {
+  async function fetchRecentTransactions(page = 1, filters?: { startDate?: string | null; endDate?: string | null; type?: string | null }) {
     isLoading.value = true
     error.value = null
+
+    // persist filters in store
+    if (filters) {
+      startDate.value = filters.startDate ?? null
+      endDate.value = filters.endDate ?? null
+      transactionType.value = filters.type ?? null
+    }
 
     try {
       const response = await apiClient.get<PaginatedStockTransactions>(
@@ -29,6 +39,9 @@ export const useStockStore = defineStore('stock', () => {
             limit: 10,
             sortBy: 'date',
             sortOrder: 'desc',
+            startDate: startDate.value || undefined,
+            endDate: endDate.value || undefined,
+            type: transactionType.value || undefined,
           },
         },
       )
@@ -60,6 +73,9 @@ export const useStockStore = defineStore('stock', () => {
     pageSize,
     isLoading,
     error,
+    startDate,
+    endDate,
+    transactionType,
     addTransaction,
     fetchRecentTransactions,
   }
