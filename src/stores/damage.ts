@@ -8,11 +8,26 @@ export const useDamageStore = defineStore('damage', () => {
   const searchQuery = ref('')
   const isLoading = ref(false)
 
-  async function fetchItems() {
+  async function fetchItems(startDate?: string | null, endDate?: string | null) {
     isLoading.value = true
     try {
       const { data } = await fetchReturns()
-      const damageReturns = data.filter((r: any) => r.type === 'Damage')
+      let returnsData = data as any[]
+
+      // apply optional date filtering (server returns date as ISO or yyyy-mm-dd)
+      if (startDate) {
+        const s = new Date(startDate)
+        returnsData = returnsData.filter((r) => new Date(r.date) >= s)
+      }
+
+      if (endDate) {
+        const e = new Date(endDate)
+        // include endDate full day
+        e.setHours(23, 59, 59, 999)
+        returnsData = returnsData.filter((r) => new Date(r.date) <= e)
+      }
+
+      const damageReturns = returnsData.filter((r: any) => r.type === 'Damage')
       items.value = damageReturns.flatMap((r: any) =>
         (r.items ?? []).map((ri: any) => ({
           id: `${r.returnNoteNo}-${ri.itemCode}`,

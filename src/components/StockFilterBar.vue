@@ -4,9 +4,16 @@ import { subDays, format } from 'date-fns'
 
 const emit = defineEmits(['apply', 'clear'])
 
+const props = defineProps<{
+  presetType?: string | null
+  disableType?: boolean
+}>()
+
 const from = ref<string | null>(null)
 const to = ref<string | null>(null)
-const type = ref<string | null>(null)
+const type = ref<string | null>(props.presetType ?? null)
+
+const disableType = props.disableType ?? false
 
 function apply() {
   emit('apply', { startDate: from.value, endDate: to.value, type: type.value })
@@ -15,7 +22,7 @@ function apply() {
 function clearFilters() {
   from.value = null
   to.value = null
-  type.value = null
+  if (!disableType) type.value = null
   emit('clear')
 }
 
@@ -42,7 +49,7 @@ function preset(days: number) {
 
       <div class="w-48">
         <label class="block text-sm font-medium text-gray-700 dark:text-zinc-300">Type</label>
-        <select v-model="type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+        <select v-model="type" :disabled="disableType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm disabled:opacity-60">
           <option value="">All</option>
           <option value="Invoice">Invoice</option>
           <option value="Return">Damage Return</option>
