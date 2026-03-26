@@ -9,4 +9,5 @@ export interface GdnFormState {
   date: string
   gdnNumber: string
   items: GdnItem[]
+  dealer?: string
 }

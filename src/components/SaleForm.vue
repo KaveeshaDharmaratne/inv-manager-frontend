@@ -2,6 +2,7 @@
 import { ref, nextTick } from 'vue'
 import { useSaleStore } from '../stores/sales'
 import { storeToRefs } from 'pinia'
+import DealerAutocomplete from './DealerAutocomplete.vue'
 
 const store = useSaleStore()
 const { form, newItem } = storeToRefs(store)
@@ -56,13 +57,7 @@ const handleSubmit = () => {
             <label class="text-sm font-semibold text-gray-700 dark:text-gray-300" for="dealer"
               >Dealer</label
             >
-            <input
-              id="dealer"
-              type="text"
-              v-model="form.dealer"
-              placeholder="Enter dealer name"
-              :class="inputClass"
-            />
+            <DealerAutocomplete v-model="form.dealer" placeholder="Enter dealer name" />
           </div>
           <div class="flex flex-col gap-2">
             <label class="text-sm font-semibold text-gray-700 dark:text-gray-300" for="invoice"

@@ -2,6 +2,7 @@
 import { ref, nextTick } from 'vue'
 import { useReturnStore } from '../stores/returns'
 import { storeToRefs } from 'pinia'
+import DealerAutocomplete from '@/components/DealerAutocomplete.vue'
 
 const store = useReturnStore()
 const { form, newItem, isSubmitting } = storeToRefs(store)
@@ -65,12 +66,7 @@ const handleSubmit = () => {
 
           <div class="flex flex-col gap-2">
             <label class="text-sm font-semibold text-gray-700">Dealer</label>
-            <input
-              type="text"
-              v-model="form.dealer"
-              placeholder="Enter dealer name"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
-            />
+            <DealerAutocomplete v-model="form.dealer" placeholder="Enter dealer name" />
           </div>
         </div>
 

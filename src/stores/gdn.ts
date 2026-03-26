@@ -14,6 +14,7 @@ export const useGdnStore = defineStore('gdn', () => {
     date: new Date().toISOString().split('T')[0] ?? '',
     gdnNumber: '',
     items: [],
+    dealer: '',
   })
 
   const isSubmitting = ref(false)
@@ -91,13 +92,14 @@ export const useGdnStore = defineStore('gdn', () => {
         date: form.date,
         type: 'GDN',
         transactionId: form.gdnNumber,
-        dealer: '',
+        dealer: form.dealer || '',
       })
 
       showSuccessMessage('GDN submitted successfully!')
 
       form.gdnNumber = ''
       form.items = []
+      form.dealer = ''
     } catch (error: any) {
       console.error('Failed to submit GDN:', error)
       showErrorMessage(error.response?.data?.message || error.message || 'Failed to submit GDN.')

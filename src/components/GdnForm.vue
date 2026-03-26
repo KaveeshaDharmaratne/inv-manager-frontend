@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { nextTick, ref } from 'vue'
 import { useGdnStore } from '@/stores/gdn'
+import DealerAutocomplete from './DealerAutocomplete.vue'
 
 const store = useGdnStore()
 const { form, newItem, isSubmitting } = storeToRefs(store)
@@ -37,7 +38,7 @@ const handleSubmit = () => {
       class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
     >
       <form class="space-y-6" @submit.prevent="handleSubmit">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div class="flex flex-col gap-2">
             <label class="text-sm font-semibold text-gray-700 dark:text-gray-300" for="gdn-date"
               >Date</label
@@ -56,6 +57,11 @@ const handleSubmit = () => {
               placeholder="Enter GDN number"
               :class="inputClass"
             />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Dealer</label>
+            <DealerAutocomplete v-model="form.dealer" placeholder="Enter dealer name" />
           </div>
         </div>
 
