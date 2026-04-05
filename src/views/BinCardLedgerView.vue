@@ -6,7 +6,7 @@ import LedgerFilterForm from '@/components/LedgerFilter.vue'
 import LedgerTable from '@/components/LedgerTable.vue'
 
 const store = useLedgerStore()
-const { entries, currentBalance, isLoading } = storeToRefs(store)
+const { products, isLoading } = storeToRefs(store)
 const { fetchEntries } = store
 
 const handleFilterSubmit = (filters: LedgerFilter) => {
@@ -21,7 +21,8 @@ const handleFilterSubmit = (filters: LedgerFilter) => {
       <div class="mb-10">
         <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Bin Card Ledger</h1>
         <p class="mt-2 text-sm text-gray-500">
-          Enter a product code and date range to view all transactions for that item.
+          Select a date range to view grouped product cards. Use product code only when you need
+          a single-item bin card.
         </p>
       </div>
 
@@ -32,7 +33,7 @@ const handleFilterSubmit = (filters: LedgerFilter) => {
           <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
         </div>
 
-        <LedgerTable v-else :entries="entries" :total-balance="currentBalance" />
+        <LedgerTable v-else :product-ledgers="products" />
       </main>
     </div>
   </div>

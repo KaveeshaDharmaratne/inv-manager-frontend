@@ -11,10 +11,18 @@ export interface LedgerEntry {
 export interface LedgerFilter {
   fromDate: string
   toDate: string
-  productCode: string
+  productCode?: string
+}
+
+export interface LedgerProduct {
+  item: { code: string; description: string }
+  openingStock: number
+  entries: LedgerEntry[]
+  totalIn: number
+  totalOut: number
+  closingBalance: number
 }
 
 export interface LedgerResponse {
-  item: { code: string; description: string }
-  entries: LedgerEntry[]
+  products: LedgerProduct[]
 }

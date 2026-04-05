@@ -4,7 +4,7 @@ import type { LedgerFilter } from '@/types/ledger'
 import { useProductStore } from '@/stores/productStore'
 
 const emit = defineEmits<{
-  (e: 'submit', filters: LedgerFilter): void
+  submit: [filters: LedgerFilter]
 }>()
 
 const productStore = useProductStore()
@@ -12,7 +12,7 @@ const productStore = useProductStore()
 const filters = reactive<LedgerFilter & { description: string }>({
   fromDate: '',
   toDate: '',
-  productCode: '',
+  productCode: undefined,
   description: '',
 })
 
@@ -20,12 +20,13 @@ const filters = reactive<LedgerFilter & { description: string }>({
 watch(
   () => filters.productCode,
   async (newCode) => {
-    if (!newCode || newCode.length < 5) {
+    if (!newCode || newCode.trim().length < 3) {
       filters.description = ''
       return
     }
-    const product = await productStore.fetchProductByCode(newCode)
-    if (filters.productCode === newCode) {
+    const normalizedCode = newCode.trim()
+    const product = await productStore.fetchProductByCode(normalizedCode)
+    if (filters.productCode?.trim() === normalizedCode) {
       filters.description = product?.description ?? ''
     }
   },
@@ -35,7 +36,7 @@ function onSubmit() {
   emit('submit', {
     fromDate: filters.fromDate,
     toDate: filters.toDate,
-    productCode: filters.productCode,
+    productCode: filters.productCode?.trim() || undefined,
   })
 }
 </script>
@@ -44,38 +45,42 @@ function onSubmit() {
   <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 mb-8">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <div class="flex flex-col gap-2">
-        <label class="text-sm font-semibold text-gray-700">From Date</label>
+        <label for="ledger-from-date" class="text-sm font-semibold text-gray-700">From Date</label>
         <input
+          id="ledger-from-date"
           type="date"
           v-model="filters.fromDate"
           class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
         />
       </div>
       <div class="flex flex-col gap-2">
-        <label class="text-sm font-semibold text-gray-700">To Date</label>
+        <label for="ledger-to-date" class="text-sm font-semibold text-gray-700">To Date</label>
         <input
+          id="ledger-to-date"
           type="date"
           v-model="filters.toDate"
           class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
         />
       </div>
       <div class="flex flex-col gap-2">
-        <label class="text-sm font-semibold text-gray-700">Product Code</label>
+        <label for="ledger-product-code" class="text-sm font-semibold text-gray-700">Product Code (Optional)</label>
         <input
+          id="ledger-product-code"
           type="text"
           v-model="filters.productCode"
-          placeholder="e.g. 10001"
+          placeholder="Leave empty to include all products"
           class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
         />
       </div>
       <div class="flex flex-col gap-2">
-        <label class="text-sm font-semibold text-gray-700">Product Description</label>
+        <label for="ledger-product-description" class="text-sm font-semibold text-gray-700">Product Description</label>
         <input
+          id="ledger-product-description"
           type="text"
           :value="filters.description"
           readonly
           tabindex="-1"
-          placeholder="Auto-filled from product code"
+          placeholder="Auto-filled when a product code is given"
           class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm bg-gray-50 text-gray-600 cursor-default"
         />
       </div>
