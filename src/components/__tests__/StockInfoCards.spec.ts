@@ -21,7 +21,6 @@ describe('StockInfoCards', () => {
     store.metrics.totalProducts = 1234
     store.metrics.lowStockCount = 56
     store.metrics.outOfStockCount = 7
-    store.metrics.totalStockValue = 850000
 
     const wrapper = mount(StockInfoCards)
 
@@ -36,30 +35,31 @@ describe('StockInfoCards', () => {
     // Check Out of Stock
     expect(wrapper.text()).toContain('Out of Stock')
     expect(wrapper.text()).toContain('7')
-
-    // Check Total Stock Value
-    // 850000 -> 850K with LKR currency
-    // The exact output depends on the locale environment in the test runner (jsdom)
-    // We can check for the number part at least
-    expect(wrapper.text()).toContain('Total Stock Value')
-    // We expect something like "LKR 850K" or "Rs. 850K"
-    const valueText = wrapper.text()
-    expect(valueText).toContain('850')
   })
 
-  it('calls lifecycle methods correctly', () => {
+  it('calls fetchMetrics on mount', () => {
     const store = useDashboardStore()
     const fetchSpy = vi.spyOn(store, 'fetchMetrics')
-    const startSpy = vi.spyOn(store, 'startRealtimeUpdates')
-    const stopSpy = vi.spyOn(store, 'stopRealtimeUpdates')
 
-    const wrapper = mount(StockInfoCards)
+    mount(StockInfoCards)
 
     expect(fetchSpy).toHaveBeenCalledTimes(1)
-    expect(startSpy).toHaveBeenCalledTimes(1)
+  })
 
-    wrapper.unmount()
+  it('calls fetchProducts when a metric card is clicked', async () => {
+    const store = useDashboardStore()
+    const fetchProductsSpy = vi.spyOn(store, 'fetchProducts')
+    const wrapper = mount(StockInfoCards)
 
-    expect(stopSpy).toHaveBeenCalledTimes(1)
+    const cards = wrapper.findAll('div.cursor-pointer')
+    expect(cards).toHaveLength(3)
+
+    await cards[0]?.trigger('click')
+    await cards[1]?.trigger('click')
+    await cards[2]?.trigger('click')
+
+    expect(fetchProductsSpy).toHaveBeenNthCalledWith(1, 'all')
+    expect(fetchProductsSpy).toHaveBeenNthCalledWith(2, 'low-stock')
+    expect(fetchProductsSpy).toHaveBeenNthCalledWith(3, 'out-of-stock')
   })
 })
