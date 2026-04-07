@@ -54,7 +54,7 @@ const typeBadgeClass = (type: string) => {
     <div v-if="productLedgers.length === 0" class="py-12 text-center text-gray-400 text-sm">
       No transactions found for the selected period.
     </div>
-    <div v-else class="space-y-8 p-4 md:p-6">
+    <div v-else class="space-y-6 md:space-y-8 p-3 sm:p-4 md:p-6">
       <section
         v-for="product in productLedgers"
         :key="product.item.code"
@@ -82,7 +82,7 @@ const typeBadgeClass = (type: string) => {
         </div>
 
         <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
+          <table class="min-w-[900px] w-full divide-y divide-gray-200">
             <thead class="bg-gray-100">
               <tr>
                 <th class="px-4 py-2 text-left text-xs font-semibold text-gray-600 uppercase">Document Date</th>

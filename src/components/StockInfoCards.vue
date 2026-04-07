@@ -34,7 +34,7 @@ const formatNumber = (value: number) => {
       <div class="flex items-start justify-between">
         <div>
           <p class="text-sm font-medium text-zinc-500">Total Products</p>
-          <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">
+          <p class="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white mt-1">
             {{ formatNumber(metrics.totalProducts) }}
           </p>
         </div>
@@ -55,7 +55,7 @@ const formatNumber = (value: number) => {
       <div class="flex items-start justify-between">
         <div>
           <p class="text-sm font-medium text-zinc-500">Items Low in Stock</p>
-          <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">
+          <p class="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white mt-1">
             {{ formatNumber(metrics.lowStockCount) }}
           </p>
         </div>
@@ -78,7 +78,7 @@ const formatNumber = (value: number) => {
       <div class="flex items-start justify-between">
         <div>
           <p class="text-sm font-medium text-zinc-500">Out of Stock</p>
-          <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">
+          <p class="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white mt-1">
             {{ formatNumber(metrics.outOfStockCount) }}
           </p>
         </div>

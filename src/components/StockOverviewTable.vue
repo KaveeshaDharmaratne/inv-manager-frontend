@@ -76,7 +76,7 @@ const badgeClass = (type: string, subtype?: string | null) => {
 <template>
   <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
     <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-gray-200">
+      <table class="min-w-[640px] w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
             <th
@@ -146,7 +146,7 @@ const badgeClass = (type: string, subtype?: string | null) => {
 
     <div
       v-if="totalPages > 1"
-      class="flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6"
+      class="flex flex-col gap-3 border-t border-gray-200 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6"
     >
       <button
         class="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
@@ -156,7 +156,7 @@ const badgeClass = (type: string, subtype?: string | null) => {
         Previous
       </button>
 
-      <div class="flex items-center gap-2">
+      <div class="flex flex-wrap items-center gap-2">
         <button
           v-for="page in pageNumbers"
           :key="page"

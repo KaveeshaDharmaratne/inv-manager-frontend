@@ -42,11 +42,11 @@ const handleClearFilters = () => {
 </script>
 
 <template>
-  <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900 py-10">
+  <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900 py-6 sm:py-8 lg:py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between">
         <div>
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
+          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
             Stock Overview
           </h2>
           <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
@@ -66,7 +66,7 @@ const handleClearFilters = () => {
             Loading products...
           </div>
           <div v-else class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-zinc-700">
+            <table class="min-w-[540px] w-full divide-y divide-gray-200 dark:divide-zinc-700">
               <thead class="bg-gray-50 dark:bg-zinc-800">
                 <tr>
                   <th
@@ -99,7 +99,7 @@ const handleClearFilters = () => {
                   >
                     {{ product.code }}
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-zinc-400">
+                  <td class="px-6 py-4 text-sm text-gray-500 dark:text-zinc-400">
                     {{ product.description || '-' }}
                   </td>
                   <td

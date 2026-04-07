@@ -19,29 +19,29 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 py-8">
+  <div class="min-h-screen bg-gray-50 py-6 sm:py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Page Header -->
-      <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Damaged Returns</h1>
+      <div class="mb-6 sm:mb-8">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Damaged Returns</h1>
         <p class="mt-2 text-sm text-gray-500">Track and manage inventory marked as damaged.</p>
       </div>
 
       <!-- Main Content Card -->
       <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <!-- Filter Toolbar -->
-        <div class="p-4 border-b border-gray-200 sm:flex-row sm:items-center justify-between gap-4">
-          <h2 class="mb-2 text-base font-semibold text-gray-900">Filter Returns</h2>
-          <div class="w-full">
+        <div class="p-4 border-b border-gray-200 flex flex-col gap-4">
+          <h2 class="text-base font-semibold text-gray-900">Filter Returns</h2>
+          <div class="w-full min-w-0">
             <StockFilterBar @apply="(f) => fetchItemsWithFilters(f)" presetType="Return" :disableType="true" />
           </div>
           <!-- Search Input -->
-          <div class="relative">
+          <div class="relative w-full sm:max-w-md">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <span class="material-icons-outlined text-gray-400 text-lg">filter_alt</span>
                 </div>
             <input type="text" v-model="searchQuery" placeholder="Find by Note No, Dealer or Code..."
-              class="pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500 w-full sm:w-80" />
+              class="pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500 w-full" />
           </div>
           <!-- Export Button -->
           <!-- <button
@@ -116,7 +116,7 @@ onMounted(() => {
         </div>
 
         <!-- Pagination Footer -->
-        <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+        <div class="px-4 sm:px-6 py-4 border-t border-gray-200 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div class="text-sm text-gray-500">
             Showing <span class="font-medium">1</span> to
             <span class="font-medium">{{ filteredItems.length }}</span> of

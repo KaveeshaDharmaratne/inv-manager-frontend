@@ -45,11 +45,11 @@ const formatDate = (dateString?: string) => {
 </script>
 
 <template>
-  <main class="p-6">
-    <div class="max-w-4xl mx-auto bg-white p-6 border">
+  <main class="p-3 sm:p-6">
+    <div class="max-w-4xl mx-auto bg-white p-3 sm:p-6 border">
       <!-- Header -->
-      <div class="flex items-start justify-between border p-4">
-        <div class="w-1/3 text-sm">
+      <div class="flex flex-col gap-6 border p-4 md:flex-row md:items-start md:justify-between">
+        <div class="w-full text-sm md:w-1/3">
           <div class="font-bold">DISTRIBUTOR</div>
           <div class="mt-2">WIJAYARATHNE DISTRIBUTORS</div>
           <div class="mt-1">No 224 1 Kudamaduwa Siddamulla</div>
@@ -57,11 +57,11 @@ const formatDate = (dateString?: string) => {
           <div class="mt-1">E Mail : wijayarathnedistributors@gmail.com</div>
         </div>
 
-        <div class="w-1/3 flex items-center justify-center">
+        <div class="w-full flex items-center justify-start md:w-1/3 md:justify-center">
           <div class="w-32 h-20 border flex items-center justify-center">LOGO</div>
         </div>
 
-        <div class="w-1/3 text-sm text-right">
+        <div class="w-full text-sm md:w-1/3 md:text-right">
           <div class="font-bold">AUTHORISED DISTRIBUTOR FOR:</div>
           <div class="mt-2">St. Anthonys Industries Group (Pvt) Ltd</div>
           <div class="mt-1">P.O Box 1455</div>
@@ -72,7 +72,7 @@ const formatDate = (dateString?: string) => {
 
       <!-- Details -->
       <div class="border p-4 mt-4">
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <div><strong>Account No:</strong> {{ transaction?.accountNo || '-' }}</div>
             <div class="mt-2"><strong>Customer:</strong></div>
@@ -81,7 +81,7 @@ const formatDate = (dateString?: string) => {
             <div class="ml-4">{{ transaction?.customer?.contactNumber || '' }}</div>
           </div>
 
-          <div class="text-right">
+          <div class="md:text-right">
             <div><strong>Order Date:</strong> {{ formatDate(transaction?.date) }}</div>
             <div class="mt-2"><strong>Time:</strong> {{ transaction?.time || '-' }}</div>
             <div class="mt-2"><strong>Invoice/Return No:</strong> {{ transaction?.transactionId || '-' }}</div>
@@ -93,7 +93,7 @@ const formatDate = (dateString?: string) => {
       <!-- Items table -->
       <div class="mt-4">
         <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
+          <table class="min-w-[620px] w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Code</th>
@@ -121,8 +121,8 @@ const formatDate = (dateString?: string) => {
         </div>
       </div>
 
-      <div class="mt-4 flex justify-between">
-        <button class="px-4 py-2 border rounded" @click="goBack">Back</button>
+      <div class="mt-4 flex flex-col sm:flex-row sm:justify-between gap-2">
+        <button class="w-full sm:w-auto px-4 py-2 border rounded" @click="goBack">Back</button>
       </div>
     </div>
   </main>

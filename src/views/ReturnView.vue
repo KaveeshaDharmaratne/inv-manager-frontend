@@ -32,17 +32,14 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 py-10">
+  <div class="min-h-screen bg-gray-50 py-6 sm:py-8 lg:py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="mb-10">
-        <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Returns</h1>
+      <div class="mb-6 sm:mb-8 lg:mb-10">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Returns</h1>
         <p class="mt-2 text-sm text-gray-500">Log product returns from dealers.</p>
       </div>
-
-
-
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 lg:p-8">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 mb-6">
           <div class="flex flex-col gap-2">
             <label class="text-sm font-semibold text-gray-700">Date</label>
             <input
@@ -91,7 +88,7 @@ const handleSubmit = () => {
           <div
             class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 space-y-4 bg-gray-50 dark:bg-gray-800/50"
           >
-            <div class="grid grid-cols-[0.6fr_2fr_0.5fr_auto] gap-4 items-end">
+            <div class="grid grid-cols-1 gap-4 items-end md:grid-cols-2 xl:grid-cols-[0.6fr_2fr_0.5fr_auto]">
               <div class="flex flex-col gap-2">
                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Code</label>
                 <input
@@ -129,7 +126,7 @@ const handleSubmit = () => {
                   :class="inputClass"
                 />
               </div>
-              <div class="pb-0.5">
+              <div class="pb-0.5 md:col-span-2 xl:col-span-1">
                 <button
                   type="button"
                   @click="handleAddItem"
@@ -150,11 +147,8 @@ const handleSubmit = () => {
                 No items added yet
               </div>
 
-              <div
-                v-else
-                class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
-              >
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <div v-else class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+                <table class="min-w-[620px] w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead class="bg-gray-50 dark:bg-gray-700">
                     <tr>
                       <th
@@ -189,7 +183,7 @@ const handleSubmit = () => {
                         {{ item.code }}
                       </td>
                       <td
-                        class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
+                        class="px-4 py-3 text-sm text-gray-500 dark:text-gray-300"
                       >
                         {{ item.description }}
                       </td>
@@ -217,11 +211,11 @@ const handleSubmit = () => {
 
         <hr class="border-gray-100 mb-8" />
 
-        <div class="flex justify-end">
+        <div class="flex flex-col sm:flex-row sm:justify-end">
           <button
             @click="handleSubmit"
             :disabled="isSubmitting || form.items.length === 0"
-            class="bg-indigo-600 text-white px-6 py-2.5 rounded-md font-medium text-sm hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full sm:w-auto bg-indigo-600 text-white px-6 py-2.5 rounded-md font-medium text-sm hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {{ isSubmitting ? 'Submitting...' : 'Submit Return' }}
           </button>
