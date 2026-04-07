@@ -40,11 +40,11 @@ const handleSubmit = () => {
 
 
     <section
-      class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
+      class="bg-white dark:bg-gray-800 p-4 sm:p-6 lg:p-8 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
     >
       <form @submit.prevent="handleSubmit" class="space-y-6">
         <!-- Invoice Header Details -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
           <div class="flex flex-col gap-2">
             <label class="text-sm font-semibold text-gray-700 dark:text-gray-300" for="date"
               >Date</label
@@ -77,7 +77,7 @@ const handleSubmit = () => {
         <div
           class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 space-y-4 bg-gray-50 dark:bg-gray-800/50"
         >
-          <div class="grid grid-cols-[0.6fr_2fr_0.7fr_0.5fr_auto] gap-4 items-end">
+          <div class="grid grid-cols-1 gap-4 items-end md:grid-cols-2 xl:grid-cols-[0.6fr_2fr_0.7fr_0.5fr_auto]">
             <div class="flex flex-col gap-2">
               <label class="text-sm font-semibold text-gray-700 dark:text-gray-300" for="code"
                 >Code</label
@@ -141,7 +141,7 @@ const handleSubmit = () => {
                 :class="inputClass"
               />
             </div>
-            <div class="pb-0.5">
+            <div class="pb-0.5 md:col-span-2 xl:col-span-1">
               <button
                 type="button"
                 @click="handleAddItem"
@@ -162,11 +162,8 @@ const handleSubmit = () => {
               No items added yet
             </div>
 
-            <div
-              v-else
-              class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
-            >
-              <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <div v-else class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+              <table class="min-w-[640px] w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead class="bg-gray-50 dark:bg-gray-700">
                   <tr>
                     <th
@@ -205,7 +202,7 @@ const handleSubmit = () => {
                       {{ item.code }}
                     </td>
                     <td
-                      class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
+                      class="px-4 py-3 text-sm text-gray-500 dark:text-gray-300"
                     >
                       {{ item.description }}
                     </td>
@@ -230,11 +227,11 @@ const handleSubmit = () => {
           </div>
 
           <!-- Submit Action -->
-          <div class="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex flex-col sm:flex-row sm:justify-end pt-4 border-t border-gray-200 dark:border-gray-700 mt-4">
             <button
               type="submit"
               :disabled="form.items.length === 0 || store.isSubmitting"
-              class="inline-flex justify-center items-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              class="inline-flex w-full sm:w-auto justify-center items-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Submit Invoice
             </button>

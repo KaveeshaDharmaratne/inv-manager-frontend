@@ -4,6 +4,7 @@ import { useRoute, RouterLink } from 'vue-router'
 import type { NavItem } from '@/types/navigation'
 
 const route = useRoute()
+const emit = defineEmits<(e: 'navigate') => void>()
 
 const navItems = ref<NavItem[]>([
   {
@@ -41,6 +42,10 @@ const toggleExpand = (item: NavItem) => {
   item.expanded = !item.expanded
 }
 
+const handleNavigate = () => {
+  emit('navigate')
+}
+
 watch(
   () => route.path,
   (newPath) => {
@@ -59,6 +64,7 @@ watch(
     <div v-for="(item, index) in navItems" :key="index">
       <button
         @click="toggleExpand(item)"
+        :aria-expanded="item.expanded ? 'true' : 'false'"
         :class="[
           'w-full flex items-center justify-between p-2 rounded font-medium transition-colors',
           'text-zinc-600 dark:text-zinc-400',
@@ -81,6 +87,7 @@ watch(
           v-for="(child, childIndex) in item.children"
           :key="childIndex"
           :to="child.to"
+          @click="handleNavigate"
           :class="[
             'block p-2 rounded text-sm transition-colors',
             'hover:bg-indigo-700 hover:text-white',

@@ -77,36 +77,36 @@ const formattedRenderedAt = computed(() => {
 </script>
 
 <template>
-  <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900 py-10">
+  <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900 py-6 sm:py-8 lg:py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between">
         <div>
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Daily Stock</h2>
+          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Daily Stock</h2>
           <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">All products with realtime quantities — current inventory as of {{ formattedRenderedAt }}.</p>
         </div>
       </div>
 
       <div class="mt-6 bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-gray-100 dark:border-zinc-800 p-4">
-        <div class="flex gap-3 items-center">
+        <div class="flex flex-col gap-3 md:flex-row md:items-center">
           <input
             v-model="search"
             type="search"
             placeholder="Search..."
-            class="px-3 py-2 border rounded w-1/3 bg-gray-50 dark:bg-zinc-800 text-sm"
+            class="w-full md:w-auto md:flex-1 px-3 py-2 border rounded bg-gray-50 dark:bg-zinc-800 text-sm"
           />
 
-          <select v-model="searchField" class="px-3 py-2 border rounded bg-white dark:bg-zinc-800 text-sm">
+          <select v-model="searchField" class="w-full md:w-auto px-3 py-2 border rounded bg-white dark:bg-zinc-800 text-sm">
             <option value="code">Item code</option>
             <option value="description">Description</option>
           </select>
 
-          <select v-model="sortOrder" class="px-3 py-2 border rounded bg-white dark:bg-zinc-800 text-sm">
+          <select v-model="sortOrder" class="w-full md:w-auto px-3 py-2 border rounded bg-white dark:bg-zinc-800 text-sm">
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
             <option value="recent">Recently added</option>
           </select>
 
-          <div class="ml-auto flex items-center gap-3">
+          <div class="flex items-center justify-between gap-3 md:ml-auto md:justify-end">
             <div class="text-sm text-gray-500 dark:text-gray-400">Showing {{ displayCount }} items</div>
             <button @click="load" class="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm">Refresh</button>
           </div>

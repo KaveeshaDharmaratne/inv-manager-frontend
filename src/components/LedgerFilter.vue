@@ -42,8 +42,8 @@ function onSubmit() {
 </script>
 
 <template>
-  <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 mb-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
       <div class="flex flex-col gap-2">
         <label for="ledger-from-date" class="text-sm font-semibold text-gray-700">From Date</label>
         <input
@@ -85,10 +85,10 @@ function onSubmit() {
         />
       </div>
     </div>
-    <div class="flex justify-end mt-6">
+    <div class="flex flex-col sm:flex-row sm:justify-end mt-6">
       <button
         @click="onSubmit"
-        class="bg-indigo-600 text-white px-8 py-2.5 rounded-md font-medium text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors shadow-sm"
+        class="w-full sm:w-auto bg-indigo-600 text-white px-8 py-2.5 rounded-md font-medium text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors shadow-sm"
       >
         Submit
       </button>
