@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { subDays, format } from 'date-fns'
+import { subDays, format, startOfMonth } from 'date-fns'
 
 const emit = defineEmits(['apply', 'clear'])
 
@@ -9,8 +9,9 @@ const props = defineProps<{
   disableType?: boolean
 }>()
 
-const from = ref<string | null>(null)
-const to = ref<string | null>(null)
+const now = new Date()
+const from = ref<string | null>(format(startOfMonth(now), 'yyyy-MM-dd'))
+const to = ref<string | null>(format(now, 'yyyy-MM-dd'))
 const type = ref<string | null>(props.presetType ?? null)
 
 const disableType = props.disableType ?? false
