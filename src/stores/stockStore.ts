@@ -2,8 +2,10 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import apiClient from '@/api/axios'
 import type { PaginatedStockTransactions, StockTransaction } from '@/types/stock'
+import { format, startOfMonth } from 'date-fns'
 
 export const useStockStore = defineStore('stock', () => {
+  const now = new Date()
   const transactions = ref<StockTransaction[]>([])
   const currentPage = ref(1)
   const totalPages = ref(1)
@@ -11,8 +13,8 @@ export const useStockStore = defineStore('stock', () => {
   const pageSize = ref(10)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
-  const startDate = ref<string | null>(null)
-  const endDate = ref<string | null>(null)
+  const startDate = ref<string | null>(format(startOfMonth(now), 'yyyy-MM-dd'))
+  const endDate = ref<string | null>(format(now, 'yyyy-MM-dd'))
   const transactionType = ref<string | null>(null)
 
   function addTransaction(transaction: StockTransaction) {
