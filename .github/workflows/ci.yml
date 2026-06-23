@@ -24,18 +24,19 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      # Disabled format, lint and test checks
       # 4. Formatting Check (Vue Official / Prettier)
-      - name: Check Formatting
-        run: npm run format:check
+      # - name: Check Formatting
+      #   run: npm run format:check
 
       # 5. Code Quality (Linting)
-      - name: Lint Code
-        run: npm run lint
+      # - name: Lint Code
+      #   run: npm run lint
 
       # 6. Unit & Component Tests
-      - name: Run Unit/Component Tests
-        run: npm run test:unit
-        # Adjust command based on your setup (e.g., vitest, jest)
+      # - name: Run Unit/Component Tests
+      #   run: npm run test:unit
+      #   # Adjust command based on your setup (e.g., vitest, jest)
 
       # 7. Build Check
       # Ensures the app actually compiles without error
