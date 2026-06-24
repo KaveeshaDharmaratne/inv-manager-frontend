@@ -52,6 +52,11 @@ const router = createRouter({
       name: 'reports-daily',
       component: () => import('../views/DailyStockView.vue'),
     },
+    {
+      path: '/settings/data-management',
+      name: 'settings-data-management',
+      component: () => import('../views/DataManagementView.vue'),
+    },
   ],
 })
 

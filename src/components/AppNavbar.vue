@@ -36,6 +36,14 @@ const navItems = ref<NavItem[]>([
       { label: 'Daily Stock', to: '/reports/daily' },
     ],
   },
+  {
+    label: 'Settings',
+    icon: 'settings',
+    expanded: false,
+    children: [
+      { label: 'Data Management', to: '/settings/data-management' },
+    ],
+  },
 ])
 
 const toggleExpand = (item: NavItem) => {
