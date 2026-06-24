@@ -31,7 +31,7 @@ const navItems = ref<NavItem[]>([
     icon: 'assessment',
     expanded: false,
     children: [
-      { label: 'Stock Report', to: '/reports/stock' },
+      // { label: 'Stock Report', to: '/reports/stock' },
       { label: 'Bin Report', to: '/reports/bin' },
       { label: 'Daily Stock', to: '/reports/daily' },
     ],
