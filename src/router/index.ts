@@ -37,11 +37,11 @@ const router = createRouter({
       component: () => import('../views/InvoiceView.vue'),
       props: true,
     },
-    {
-      path: '/reports/stock',
-      name: 'reports-stock',
-      component: Placeholder,
-    },
+    // {
+    //   path: '/reports/stock',
+    //   name: 'reports-stock',
+    //   component: Placeholder,
+    // },
     {
       path: '/reports/bin',
       name: 'reports-bin',
@@ -51,6 +51,11 @@ const router = createRouter({
       path: '/reports/daily',
       name: 'reports-daily',
       component: () => import('../views/DailyStockView.vue'),
+    },
+    {
+      path: '/settings/data-management',
+      name: 'settings-data-management',
+      component: () => import('../views/DataManagementView.vue'),
     },
   ],
 })

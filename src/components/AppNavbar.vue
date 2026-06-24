@@ -31,9 +31,17 @@ const navItems = ref<NavItem[]>([
     icon: 'assessment',
     expanded: false,
     children: [
-      { label: 'Stock Report', to: '/reports/stock' },
+      // { label: 'Stock Report', to: '/reports/stock' },
       { label: 'Bin Report', to: '/reports/bin' },
       { label: 'Daily Stock', to: '/reports/daily' },
+    ],
+  },
+  {
+    label: 'Settings',
+    icon: 'settings',
+    expanded: false,
+    children: [
+      { label: 'Data Management', to: '/settings/data-management' },
     ],
   },
 ])
