@@ -87,6 +87,9 @@ export const useGdnStore = defineStore('gdn', () => {
     try {
       await createGdn(form)
 
+      // Invalidate product cache so subsequent lookups get fresh quantities
+      productStore.invalidateCache()
+
       stockStore.addTransaction({
         id: crypto.randomUUID(),
         date: form.date,

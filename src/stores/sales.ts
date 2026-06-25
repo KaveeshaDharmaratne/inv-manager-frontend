@@ -105,6 +105,9 @@ export const useSaleStore = defineStore('sales', () => {
     try {
       await createInvoice(form)
 
+      // Invalidate product cache so subsequent lookups get fresh quantities
+      productStore.invalidateCache()
+
       stockStore.addTransaction({
         id: crypto.randomUUID(),
         date: form.date,
