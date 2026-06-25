@@ -90,6 +90,9 @@ export const useReturnStore = defineStore('returns', () => {
     try {
       await createReturn(form)
 
+      // Invalidate product cache to refresh the stock quantities
+      productStore.invalidateCache()
+
       let transactionType = 'Return Stock'
       if (form.type === 'Damage') transactionType = 'Damage Stock'
       else if (form.type === 'Expired') transactionType = 'Expired Stock'
