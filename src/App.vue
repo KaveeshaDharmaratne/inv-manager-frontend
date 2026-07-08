@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import AppNavbar from './components/AppNavbar.vue'
 import FlashMessages from './components/FlashMessages.vue'
 
 const route = useRoute()
 const isSidebarOpen = ref(false)
+
+const isLoginPage = computed(() => route.name === 'login')
 
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value
@@ -24,11 +26,16 @@ watch(
 </script>
 
 <template>
+  <FlashMessages />
+
+  <!-- Login page: no shell, just the view -->
+  <RouterView v-if="isLoginPage" />
+
+  <!-- Authenticated shell: sidebar + header + content -->
   <div
+    v-else
     class="relative flex h-screen bg-background-light dark:bg-background-dark text-zinc-800 dark:text-zinc-200 font-display"
   >
-    <FlashMessages />
-
     <div
       v-if="isSidebarOpen"
       class="fixed inset-0 z-30 bg-zinc-950/40 md:hidden"
