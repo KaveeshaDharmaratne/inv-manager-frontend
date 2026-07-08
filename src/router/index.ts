@@ -1,11 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
-// In a real app, you would import actual components from ../views/
-const Placeholder = { template: '<div>Page Content</div>' }
+import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/LoginView.vue'),
+      meta: { requiresAuth: false },
+    },
+    {
+      path: '/',
+      redirect: '/stock/overview',
+    },
     {
       path: '/stock/overview',
       name: 'stock-overview',
@@ -58,6 +66,22 @@ const router = createRouter({
       component: () => import('../views/DataManagementView.vue'),
     },
   ],
+})
+
+router.beforeEach(async (to) => {
+  const authStore = useAuthStore()
+  // Wait for Firebase to finish its initial auth check
+  await authStore.authReady
+
+  const isAuthenticated = !!authStore.user
+  const isLoginPage = to.name === 'login'
+
+  if (!isAuthenticated && !isLoginPage) {
+    return { name: 'login' }
+  }
+  if (isAuthenticated && isLoginPage) {
+    return { path: '/stock/overview' }
+  }
 })
 
 export default router
