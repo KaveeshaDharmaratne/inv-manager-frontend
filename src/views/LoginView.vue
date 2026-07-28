@@ -1,22 +1,45 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth'
 import { useTimedFlashMessages } from '@/composables/useTimedFlashMessages'
+import {
+  appName,
+  appSubtitle,
+  isDemoMode,
+} from '@/config/app'
 import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
 const { showErrorMessage } = useTimedFlashMessages()
 const router = useRouter()
 
+const handleGuestSignIn = async () => {
+  try {
+    await authStore.signInAsGuest()
+    await router.push('/stock/overview')
+  } catch (error) {
+    console.error('Guest sign-in failed:', error)
+    showErrorMessage('Failed to start the demo application. Please try again.')
+  }
+}
+
 const handleGoogleSignIn = async () => {
   try {
     await authStore.signInWithGoogle()
-    router.push('/stock/overview')
-  } catch (error: any) {
+    await router.push('/stock/overview')
+  } catch (error: unknown) {
     console.error('Sign-in failed:', error)
-    if (error.message === 'Unauthorized email address.') {
-      showErrorMessage('Your email address is not authorized to access this system.')
+
+    const message =
+      error instanceof Error ? error.message : ''
+
+    if (message === 'Unauthorized email address.') {
+      showErrorMessage(
+        'Your email address is not authorized to access this system.',
+      )
     } else {
-      showErrorMessage('Failed to sign in with Google. Please try again.')
+      showErrorMessage(
+        'Failed to sign in with Google. Please try again.',
+      )
     }
   }
 }
@@ -32,21 +55,29 @@ const handleGoogleSignIn = async () => {
       <div
         class="absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-violet-200/30 dark:bg-violet-900/20 blur-3xl" />
     </div>
-
     <div
       class="relative z-10 w-full max-w-md rounded-2xl border border-zinc-200/80 bg-white/80 px-8 py-12 shadow-xl shadow-zinc-200/40 backdrop-blur-lg dark:border-zinc-700/60 dark:bg-zinc-900/80 dark:shadow-zinc-950/40 sm:px-12 sm:py-16">
       <!-- Brand heading -->
       <div class="mb-10 text-center">
         <h1 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-3xl">
-          Wijayarathne Distributors
+          {{ appName }}
         </h1>
         <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-          Inventory Management System
+          {{ appSubtitle }}
         </p>
       </div>
-
+      <!-- Guest Sign-In button -->
+      <button v-if="isDemoMode" type="button" :disabled="authStore.loading"
+        class="flex w-full items-center justify-center rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-medium text-white transition hover:bg-indigo-700 disabled:pointer-events-none disabled:opacity-60"
+        @click="handleGuestSignIn">
+        {{
+          authStore.loading
+            ? 'Opening demo…'
+            : 'Continue as Guest'
+        }}
+      </button>
       <!-- Google Sign-In button -->
-      <button id="google-sign-in-btn" type="button" :disabled="authStore.loading"
+      <button v-else id="google-sign-in-btn" type="button" :disabled="authStore.loading"
         class="group relative flex w-full items-center justify-center gap-3 rounded-xl border border-zinc-300 bg-white px-6 py-3.5 text-sm font-medium text-zinc-700 shadow-sm transition-all duration-200 hover:border-zinc-400 hover:bg-zinc-50 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:border-zinc-500 dark:hover:bg-zinc-750"
         @click="handleGoogleSignIn">
         <!-- Spinner (while loading) -->
@@ -55,7 +86,6 @@ const handleGoogleSignIn = async () => {
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>
-
         <!-- Google "G" icon -->
         <svg v-else class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -71,13 +101,15 @@ const handleGoogleSignIn = async () => {
             d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
             fill="#EA4335" />
         </svg>
-
         <span>{{ authStore.loading ? 'Signing in…' : 'Sign in with Google' }}</span>
       </button>
-
       <!-- Footer note -->
       <p class="mt-8 text-center text-xs text-zinc-400 dark:text-zinc-500">
-        Authorized personnel only
+        {{
+          isDemoMode
+            ? 'Public demo • Sample data only'
+            : 'Authorized personnel only'
+        }}
       </p>
     </div>
   </div>
