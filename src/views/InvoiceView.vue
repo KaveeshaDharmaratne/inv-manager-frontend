@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { format, parseISO } from 'date-fns'
 import { useRoute, useRouter } from 'vue-router'
 import apiClient from '../api/axios'
+import { businessProfile } from '@/config/app'
 
 const route = useRoute()
 const router = useRouter()
@@ -51,10 +52,10 @@ const formatDate = (dateString?: string) => {
       <div class="flex flex-col gap-6 border p-4 md:flex-row md:items-start md:justify-between">
         <div class="w-full text-sm md:w-1/3">
           <div class="font-bold">DISTRIBUTOR</div>
-          <div class="mt-2">WIJAYARATHNE DISTRIBUTORS</div>
-          <div class="mt-1">No 224 1 Kudamaduwa Siddamulla</div>
-          <div class="mt-1">TEL : 0775531345/011-3414585</div>
-          <div class="mt-1">E Mail : wijayarathnedistributors@gmail.com</div>
+          <div class="mt-2">{{ businessProfile.name }}</div>
+          <div class="mt-1">{{ businessProfile.address }}</div>
+          <div class="mt-1">{{ businessProfile.phone }}</div>
+          <div class="mt-1">{{ businessProfile.email }}</div>
         </div>
 
         <div class="w-full flex items-center justify-start md:w-1/3 md:justify-center">
@@ -63,10 +64,9 @@ const formatDate = (dateString?: string) => {
 
         <div class="w-full text-sm md:w-1/3 md:text-right">
           <div class="font-bold">AUTHORISED DISTRIBUTOR FOR:</div>
-          <div class="mt-2">St. Anthonys Industries Group (Pvt) Ltd</div>
-          <div class="mt-1">P.O Box 1455</div>
-          <div class="mt-1">752/1,Dr.Danister De Silva Mawatha,Colombo</div>
-          <div class="mt-1">TEL : 0112680600</div>
+          <div class="mt-2">{{ businessProfile.authorizedForName }}</div>
+          <div class="mt-1">{{ businessProfile.authorizedForAddress }}</div>
+          <div class="mt-1">{{ businessProfile.authorizedForPhone }}</div>
         </div>
       </div>
 
